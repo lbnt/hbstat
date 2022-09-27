@@ -1,0 +1,72 @@
+<h2 class="subtitle">Ce club a participé aux {{ nbresults }} compétitions suivantes :</h2>
+{% if clubpools %}
+    <table class="table is-fullwidth is-hoverable">
+        <thead>
+            <tr>
+                <th>Compétition</th>
+				<th>Phase</th>
+                <th>Poule</th>
+            </tr>
+        </thead>
+        {% for clubpool in clubpools %}
+        <tbody>
+            <tr>
+                <td>{{ clubpool.dplayer__dpoolplayer__pool__competition__name }}</td>
+                <td>{{ clubpool.dplayer__dpoolplayer__pool__phase_name }}</td>
+                <td>{{ clubpool.dplayer__dpoolplayer__pool__name }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% if clubpools.has_other_pages %}
+        <nav class="pagination" role="navigation" aria-label="pagination">
+            {% if clubpools.has_previous %}
+            <a class="pagination-previous"
+                hx-get="/clubdatapools/" 
+                hx-target="#clubdatapools"
+                hx-vals='{"page": {{ clubpools.number|add:"-1" }} }'>
+                Précédent
+            </a>
+            {% else %}
+            <a class="pagination-previous is-disabled">Précédent</a>
+            {% endif %}
+            
+            {% if clubpools.has_next %}
+            <a class="pagination-next"
+                hx-get="/clubdatapools/" 
+                hx-target="#clubdatapools"
+                hx-vals='{"page": {{ clubpools.number|add:"1" }} }'>
+                Suivant
+            </a>
+            {% else %}
+            <a class="pagination-next is-disabled">Suivant</a>
+            {% endif %}
+
+            <ul class="pagination-list"></ul>
+            {% for i in page_range|default_if_none:clubpools.paginator.get_elided_page_range %}
+                {% if clubpools.number == i %}
+                    <a class="pagination-link is-current"
+                        hx-get="/clubdatapools/" 
+                        hx-target="#clubdatapools"
+                        hx-vals='{"page": {{ i }} }'>
+                        {{ i }}
+                    </a>
+                {% else %}
+                    {% if i == clubpools.paginator.ELLIPSIS %}
+                        <a class="pagination-link">{{ i }}</a>
+                    {% else %}
+                        <a class="pagination-link" 
+                            hx-get="/clubdatapools/" 
+                            hx-target="#clubdatapools"
+                            hx-vals='{"page": {{ i }} }'>
+                            {{ i }}
+                        </a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </nav>
+    {% endif %}
+{% else %}
+    Pas de données!
+{% endif %}

@@ -1,0 +1,35 @@
+<section class="section">
+    <h1 class="title">Evènements de la poule</h1>
+    <h2>{{ pool_gender }} - {{ pool_age }}</h2>
+    {% if poolevents %}
+    <table class="table is-fullwidth is-hoverable">
+        <thead>
+            <tr>
+                <th>Journée</th>
+                <th>Date</th>
+                <th>Equipe 1</th>
+                <th>Score</th>
+                <th>Equipe 2</th>
+                <th>Score</th>
+                <th>FdM</th>
+            </tr>
+        </thead>
+        {% for poolevent in poolevents %}
+        <tbody>
+            <tr>
+                <td>{{ poolevent.date_day }}</td>
+                <td>{{ poolevent.date.start|date:'d-m-Y' }}</td>
+                <td>{{ poolevent.team_0_name }}</td>
+                <td>{% if poolevent.team_0_score == None %}-{% else %}{{ poolevent.team_0_score }}{% endif %}</td>
+                <td>{{ poolevent.team_1_name }}</td>
+                <td>{% if poolevent.team_1_score == None %}-{% else %}{{ poolevent.team_1_score }}{% endif %}</td>
+                <td><a href={{ poolevent.fdm }}>{% if poolevent.team_1_score != None %}FdM{% endif %}</a></td>
+            </tr>
+        </tbody>
+        {% endfor %} 
+    </table>
+    {% else %}
+    Pas de données d'évènements pour cette poule!
+    {% endif %}
+</section>
+

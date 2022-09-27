@@ -1,0 +1,20 @@
+<div id="competitions"></div>
+    <div class="field">
+        <div class="control">
+            <div class="select">
+                <select hx-get="/pools"
+                    name="competitionid"
+                    hx-target="#pools">
+                <option selected> -- Choisissez une compétition -- </option>
+                {% for competition in competitions %}
+                    <option value={{ competition.id }}>{{ competition.name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div id="pools">
+        </div>
+    </div>
+</div>

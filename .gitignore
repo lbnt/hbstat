@@ -1,0 +1,18 @@
+# Python
+*.pyc
+*~
+__pycache__
+
+
+# Base de donnée
+db.sqlite3
+
+# Settings
+settings.json
+
+# Todo
+todo.txt
+
+# Visual Studio
+.vscode/
+

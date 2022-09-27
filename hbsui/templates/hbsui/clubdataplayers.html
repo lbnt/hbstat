@@ -1,0 +1,73 @@
+<h2 class="subtitle">{{ nbresults }} joueurs ont joué au moins un match</h2>
+{% if players %}
+    <table class="table is-fullwidth is-hoverable">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>M/F</th>
+            </tr>
+        </thead>
+        {% for player in players %}
+        <tbody>
+            <tr>
+                <td>{{ player.last_name }}</td>
+                <td>{{ player.first_name|lower|capfirst }}</td>
+                <td>{{ player.gender }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+        
+    </table>
+    {% if players.has_other_pages %}
+        <nav class="pagination" role="navigation" aria-label="pagination">
+            {% if players.has_previous %}
+            <a class="pagination-previous"
+                hx-get="/clubdataplayers/" 
+                hx-target="#clubdataplayers"
+                hx-vals='{"page": {{ players.number|add:"-1" }} }'>
+                Précédent
+            </a>
+            {% else %}
+            <a class="pagination-previous is-disabled">Précédent</a>
+            {% endif %}
+            
+            {% if players.has_next %}
+            <a class="pagination-next"
+                hx-get="/clubdataplayers/" 
+                hx-target="#clubdataplayers"
+                hx-vals='{"page": {{ players.number|add:"1" }} }'>
+                Suivant
+            </a>
+            {% else %}
+            <a class="pagination-next is-disabled">Suivant</a>
+            {% endif %}
+
+            <ul class="pagination-list"></ul>
+            {% for i in page_range|default_if_none:players.paginator.get_elided_page_range %}
+                {% if players.number == i %}
+                    <a class="pagination-link is-current"
+                        hx-get="/clubdataplayers/" 
+                        hx-target="#clubdataplayers"
+                        hx-vals='{"page": {{ i }} }'>
+                        {{ i }}
+                    </a>
+                {% else %}
+                    {% if i == players.paginator.ELLIPSIS %}
+                        <a class="pagination-link">{{ i }}</a>
+                    {% else %}
+                        <a class="pagination-link" 
+                            hx-get="/clubdataplayers/" 
+                            hx-target="#clubdataplayers"
+                            hx-vals='{"page": {{ i }} }'>
+                            {{ i }}
+                        </a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </nav>
+    {% endif %}
+{% else %}
+    Pas de données!
+{% endif %}

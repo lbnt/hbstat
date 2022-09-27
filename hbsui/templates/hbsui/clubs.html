@@ -1,0 +1,34 @@
+<section class="section">
+    <h1 class="title">Recherche de clubs</h1>
+    <h2 class="subtitle">
+      Renseignez vos critères de recherche (sans accents!)
+    </h2>
+    <form>
+        <div class="field">
+            <label class="label">Nom du club</label>
+            <div class="control">
+                <input name="name" type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Numéro de département (00-99)</label>
+            <div class="control">
+                <input name="departement" type="text">
+            </div> 
+        </div>
+        <div class="field">
+            <div class="control">
+                <button
+                    class="button is-primary"
+                    hx-trigger="click"
+                    hx-get="/searchclubs/" 
+                    hx-target="#searchresults"
+                    hx-include="[name='name'],[name='departement']">
+                    Rechercher
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
+
+<div id="searchresults"></div>

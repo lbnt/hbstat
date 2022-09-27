@@ -1,0 +1,25 @@
+<div id="categories"></div>
+    <section class="section">
+        <h1 class="title">Choisissez une compétition</h1>
+        <h2 class="subtitle">
+          Choisissez votre catégorie, votre championnat, votre compétition puis votre poule.
+        </h2>
+        <div class="field">
+            <div class="control">
+                <div class="select">
+                    <select hx-get="/championships"
+                        name="categoryid"
+                        hx-target="#championships">
+                        <option selected> -- Choisissez une catégorie de championnat -- </option>
+                        <option value='D'>Championnats départementaux</option>
+                        <option value='R'>Championnats régionaux</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div id="championships">
+            </div>
+        </div>
+    </section>
+</div>

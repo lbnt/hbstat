@@ -1,0 +1,76 @@
+{% if clubs %}
+    <p>{{ nb_clubs }} clubs trouvés</p>
+    <table class="table is-fullwidth is-hoverable">
+        <thead>
+            <tr>
+                <th>Club</th>
+                <th>Département</th>
+            </tr>
+        </thead>
+        {% for club in clubs %}
+        <tbody>
+            <tr hx-get="/clubdata" hx-target="#modalclubdata" hx-trigger="click" hx-vals='{"id": {{ club.id }}}'>
+                <td><a>{{ club.name }}</a></td>
+                <td><a>{{ club.departement }}</a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
+        
+    </table>
+    {% if clubs.has_other_pages %}
+    <nav class="pagination" role="navigation" aria-label="pagination">
+        {% if clubs.has_previous %}
+        <a class="pagination-previous"
+            hx-get="/searchclubs/" 
+            hx-target="#searchresults"
+            hx-include="[name='name'],[name='departement']"
+            hx-vals='{"page": {{ clubs.number|add:"-1" }}}'>
+            Précédent
+        </a>
+        {% else %}
+        <a class="pagination-previous is-disabled">Précédent</a>
+        {% endif %}
+        
+        {% if clubs.has_next %}
+        <a class="pagination-next"
+            hx-get="/searchclubs/" 
+            hx-target="#searchresults"
+            hx-include="[name='name'],[name='departement']"
+            hx-vals='{"page": {{ clubs.number|add:"1" }}}'>
+            Suivant
+        </a>
+        {% else %}
+        <a class="pagination-next is-disabled">Suivant</a>
+        {% endif %}
+
+        <ul class="pagination-list"></ul>
+        {% for i in page_range|default_if_none:clubs.paginator.get_elided_page_range %}
+            {% if clubs.number == i %}
+                <a class="pagination-link is-current"
+                    hx-get="/searchclubs/" 
+                    hx-target="#searchresults"
+                    hx-include="[name='name'],[name='departement']"
+                    hx-vals='{"page": {{ i }}}'>
+                    {{ i }}
+                </a>
+            {% else %}
+                {% if i == clubs.paginator.ELLIPSIS %}
+                    <a class="pagination-link">{{ i }}</a>
+                {% else %}
+                    <a class="pagination-link" 
+                        hx-get="/searchclubs/" 
+                        hx-target="#searchresults"
+                        hx-include="[name='name'],[name='departement']"
+                        hx-vals='{"page": {{ i }}}'>
+                        {{ i }}
+                    </a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
+{% else  %}
+    <p>Pas de données</p>      
+{% endif %}
+<div id="modalclubdata"></div>

@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>HBSTAT</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        
+    </head>
+    
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                <a class="navbar-item" href="">
+                    <img src="{% static 'hbsui/logo.png' %}" width="112" height="28">
+                </a>
+            
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+                </div>
+            
+                <div id="navbar" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" hx-get="/categories" hx-target="#main">
+                        Les compétitions
+                    </a>
+                    <a class="navbar-item" hx-get="/clubs" hx-target="#main">
+                        Les clubs
+                    </a>
+                    <a class="navbar-item" hx-get="/players" hx-target="#main">
+                        Les joueurs
+                    </a>
+                    </div>
+                </div>
+                <div class="navbar-end">
+                </div>
+            </nav>
+        </div>
+        
+        <main>
+            <div class="container">
+                <div id="main"></div>
+            </div>
+        </main>
+
+        <footer>
+        </footer>
+    </body>
+</html>

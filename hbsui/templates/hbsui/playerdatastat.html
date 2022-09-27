@@ -1,0 +1,29 @@
+<br>
+<br>
+<p>Statistiques par match</p>
+<p class="subtitle">{{ pool.competition.name }}
+{{ pool.phase_name }}</p>
+<table class="table is-fullwidth">
+    <thead>
+        <tr>
+            <th>Match</th>
+            <th>But</th>
+            <th>Arrêt</th>
+            <th>2 min</th>
+            <th>Carton jaune</th>
+            <th>Carton rouge</th>
+        </tr>
+    </thead>
+    {% for playerpoolstat in playerpoolstats %}
+    <tbody>
+        <tr>
+            <td>{{ playerpoolstat.game }}</td>
+            <td>{{ playerpoolstat.goal }}</td>
+            <td>{{ playerpoolstat.saves }}</td>
+            <td>{{ playerpoolstat.mins }}</td>
+            <td>{{ playerpoolstat.warn }}</td>
+            <td>{{ playerpoolstat.dis }}</td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>

@@ -1,0 +1,53 @@
+<section class="section">
+    <h1 class="title">Recherche de joueurs</h1>
+    <h2 class="subtitle">
+      Renseignez vos critères de recherche (sans accent!)
+    </h2>
+    <form>
+        <div class="field">
+            <label class="label">Prénom</label>
+            <div class="control">
+                <input name="first_name" type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Nom</label>
+            <div class="control">
+                <input name="last_name" type="text">
+            </div> 
+        </div>
+        <div class="field">
+            <label class="label">Club</label>
+            <div class="control">
+                <input name="name" type="text">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Masculin ou féminine</label>
+            <div class="control">
+                <div class="select">
+                    <select name="gender">
+                        <option value='Z' selected>Masculin ou féminine</option>
+                        <option value='M'>Masculin</option>
+                        <option value='F'>Féminine</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button
+                    class="button is-primary"
+                    hx-trigger="click"
+                    hx-get="/searchplayers/" 
+                    hx-target="#searchresults"
+                    hx-include="[name='first_name'],[name='last_name'],[name='name'],[name='gender']">
+                    Rechercher
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
+
+<div id="searchresults"></div>
+  

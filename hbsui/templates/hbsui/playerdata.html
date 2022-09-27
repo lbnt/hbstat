@@ -1,0 +1,39 @@
+<div class="modal is-active">
+	<div class="modal-background"></div>
+	<div class="modal-content" style="width: 70%">
+		<div class="box">
+			<h1 class="title">{{ player.last_name }} {{ player.first_name|lower|capfirst }}</h1>
+			<h2 class="subtitle">{{ player.club.name }}</h2>
+			<p>Statistiques par phase/poule</p>
+			<table class="table is-fullwidth is-hoverable">
+				<thead>
+					<tr>
+						<th>Phase</th>
+						<th>Poule</th>
+						<th>Nb matchs</th>
+						<th>But</th>
+						<th>Arrêt</th>
+						<th>Moy But</th>
+						<th>Moy Arrêt</th>
+					</tr>
+				</thead>
+				{% for playerpool in playerpools %}
+				<tbody>
+					<tr hx-get="/playerdatastat" hx-target="#playerdatastat" hx-trigger="click" hx-vals='{"id": {{ playerpool.pool.id }},"id": {{ player.id }}}'>
+						<td>{{ playerpool.pool.competition.name }}</td>
+						<td>{{ playerpool.pool.phase_name }}</td>
+						<td>{{ playerpool.match_played }}</td>
+						<td>{{ playerpool.goal }}</td>
+						<td>{{ playerpool.saves }}</td>
+						<td>{{ playerpool.avg }}</td>
+						<td>{{ playerpool.avg_stop }}</td>
+					</tr>
+				</tbody>
+				{% endfor %}
+			</table>
+			<div id="playerdatastat"></div>
+			<button class="button" hx-get="/emptymodal" hx-target="#modalplayerdata">Fermer</button>
+		</div>
+		<button class="modal-close is-large" aria-label="close" hx-get="/emptymodal" hx-target="#modalplayerdata"></button>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+<div class="control">
+    <div class="select">
+        <select hx-get="/championship"
+            name="championshipId"
+            hx-target="#competitions">
+        <option selected> -- Choisissez un championnat -- </option>
+        {% for championship in championships %}
+            <div>{{ forloop.counter }} {{ championship.name }}</div>
+        {% endfor %}
+        </select>
+    </div>
+</div>
+<div id="competitions">
+    <div id="competition"></div>
+</div>
