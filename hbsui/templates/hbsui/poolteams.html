@@ -1,40 +1,38 @@
-<section class="section">
-    <h1 class="title">Classement de la poule</h1>
-    {% if poolteams %}
-    <table class="table is-fullwidth is-hoverable">
-        <thead>
-            <tr>
-                <th>Equipe</th>
-                <th>Classement</th>
-                <th>J</th>
-                <th>Pts</th>
-                <th>G</th>
-                <th>N</th>
-                <th>P</th>
-                <th>Buts+</th>
-                <th>Buts-</th>
-                <th>DiFF</th>
-            </tr>
-        </thead>
-        {% for poolteam in poolteams %}
-        <tbody>
-            <tr>
-                <td>{{ poolteam.team_name }}</td>
-                <td>{{ poolteam.position }}</td>
-                <td>{{ poolteam.games }}</td>
-                <td>{{ poolteam.points }}</td>
-                <td>{{ poolteam.wins }}</td>
-                <td>{{ poolteam.draws }}</td>
-                <td>{{ poolteam.defeats }}</td>
-                <td>{{ poolteam.scored }}</td>
-                <td>{{ poolteam.missed }}</td>
-                <td>{{ poolteam.difference }}</td>
-            </tr>
-        </tbody>
-        {% endfor %}
-        
-    </table>
-    {% else %}
-    Pas de données de classement pour cette poule!
-    {% endif %}
-</section>
+<p><strong>Classement de la poule</strong></p>
+{% if poolteams %}
+<table class="table is-fullwidth is-hoverable">
+    <thead>
+        <tr>
+            <th>Equipe</th>
+            <th>Classement</th>
+            <th>J</th>
+            <th>Pts</th>
+            <th>G</th>
+            <th>N</th>
+            <th>P</th>
+            <th>Buts+</th>
+            <th>Buts-</th>
+            <th>DiFF</th>
+        </tr>
+    </thead>
+    {% for poolteam in poolteams %}
+    <tbody>
+        <tr>
+            <td>{{ poolteam.team_name }}</td>
+            <td>{{ poolteam.position }}</td>
+            <td>{{ poolteam.games }}</td>
+            <td>{{ poolteam.points }}</td>
+            <td>{{ poolteam.wins }}</td>
+            <td>{{ poolteam.draws }}</td>
+            <td>{{ poolteam.defeats }}</td>
+            <td>{{ poolteam.scored }}</td>
+            <td>{{ poolteam.missed }}</td>
+            <td>{{ poolteam.difference }}</td>
+        </tr>
+    </tbody>
+    {% endfor %}
+    
+</table>
+{% else %}
+Pas de données de classement pour cette poule!
+{% endif %}

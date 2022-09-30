@@ -2,7 +2,7 @@
 	<div class="modal-background"></div>
 	<div class="modal-content" style="width: 70%">
 		<div class="box">
-			<h1 class="title">{{ club.name }}</h1>
+			<p><strong>{{ club.name }}</strong></p>
             <div id="clubdataplayers" hx-get="/clubdataplayers" hx-trigger="load" hx-vals='{"id": {{ club.id }}}'></div>
 			<br>
 			<div id="clubdatapools" hx-get="/clubdatapools" hx-trigger="load" hx-vals='{"id": {{ club.id }}}'></div>

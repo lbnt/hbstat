@@ -2,8 +2,9 @@
 	<div class="modal-background"></div>
 	<div class="modal-content" style="width: 70%">
 		<div class="box">
-			<h1 class="title">{{ player.last_name }} {{ player.first_name|lower|capfirst }}</h1>
-			<h2 class="subtitle">{{ player.club.name }}</h2>
+			<p><strong>{{ player.last_name }} {{ player.first_name|lower|capfirst }}</strong></p>
+			<p>{{ player.club.name }}</p>
+			<br>
 			<p>Statistiques par phase/poule</p>
 			<table class="table is-fullwidth is-hoverable">
 				<thead>
