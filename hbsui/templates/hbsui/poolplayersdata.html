@@ -1,23 +1,21 @@
 {% if poolplayers %}
-    <table class="table is-fullwidth is-hoverable">
+    <table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
         <thead>
             <tr>
                 <th>Club</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Nb matchs</th>
+                <th>Joueur</th>
+                <th>J</th>
                 <th>But</th>
-                <th>Arrêt</th>
+                <th>Arr.</th>
                 <th>Moy But</th>
-                <th>Moy Arrêt</th>
+                <th>Moy Arr.</th>
             </tr>
         </thead>
         {% for poolplayer in poolplayers %}
         <tbody>
             <tr>
                 <td>{{ poolplayer.player.club.name }}</td>
-                <td>{{ poolplayer.player.last_name }}</td>
-                <td>{{ poolplayer.player.first_name|lower|capfirst }}</td>
+                <td>{{ poolplayer.player.last_name }} {{ poolplayer.player.first_name|lower|capfirst }}</td>
                 <td>{{ poolplayer.match_played }}</td>
                 <td>{{ poolplayer.goal }}</td>
                 <td>{{ poolplayer.saves }}</td>

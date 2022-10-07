@@ -1,38 +1,42 @@
-<p><strong>Statistiques des joueurs</strong></p>
-<p>Statistiques des joueurs pour cette poule uniquement.</p>
-<form>
-    <div class="field">
-        <div class="control">
-            <div class="select">
-                <select hx-get="/poolplayersdata/"
-                    name="clubid"
-                    hx-target="#poolplayersdata"
-                    hx-include="[name='poolid'],[name='orderby']" >
-                    <option value='all' selected> -- Choisissez une club -- </option>
-                    <option value='all'>Tous les clubs</option>
-                    {% for poolclub in poolclubs %}
-                    <option value={{ poolclub.player__club__id }}>{{ poolclub.player__club__name }}</option>
-                    {% endfor %}
-                </select>
+<div class="columns">
+    <div class="column is-8 is-offset-2 is-full-mobile is-size-7-mobile">
+        <p><strong>Statistiques des joueurs</strong></p>
+        <p>Statistiques des joueurs pour cette poule uniquement.</p>
+        <form>
+            <div class="field">
+                <div class="control">
+                    <div class="select">
+                        <select hx-get="/poolplayersdata/"
+                            name="clubid"
+                            hx-target="#poolplayersdata"
+                            hx-include="[name='poolid'],[name='orderby']" >
+                            <option value='all' selected> -- Choisissez une club -- </option>
+                            <option value='all'>Tous les clubs</option>
+                            {% for poolclub in poolclubs %}
+                            <option value={{ poolclub.player__club__id }}>{{ poolclub.player__club__name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="field">
-        <div class="control">
-            <div class="select">
-                <select hx-get="/poolplayersdata/"
-                    name="orderby"
-                    hx-target="#poolplayersdata"
-                    hx-include="[name='poolid'],[name='clubid']" >
-                    <option value='-match_played' selected> -- Choisissez une classement -- </option>
-                    <option value='-match_played'>Nb de matchs joués</option>
-                    <option value='-goal'>Buts marqués</option>
-                    <option value='-saves'>Arrêts</option>
-                    <option value='-avg'>Moyenne de buts marqués</option>
-                    <option value='-avg_stop'>Moyenne d'arrêts</option>
-                </select>
+            <div class="field">
+                <div class="control">
+                    <div class="select">
+                        <select hx-get="/poolplayersdata/"
+                            name="orderby"
+                            hx-target="#poolplayersdata"
+                            hx-include="[name='poolid'],[name='clubid']" >
+                            <option value='-match_played' selected> -- Choisissez une classement -- </option>
+                            <option value='-match_played'>Nb de matchs joués</option>
+                            <option value='-goal'>Buts marqués</option>
+                            <option value='-saves'>Arrêts</option>
+                            <option value='-avg'>Moyenne de buts marqués</option>
+                            <option value='-avg_stop'>Moyenne d'arrêts</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
+        <div id="poolplayersdata"></div>
     </div>
-</form>
-<div id="poolplayersdata"></div>
+</div>
