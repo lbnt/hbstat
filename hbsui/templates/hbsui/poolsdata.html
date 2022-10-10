@@ -1,10 +1,14 @@
-<div id="poolsdata"></div>
-    <div hx-get="/poolevents" hx-trigger="load" hx-include="[name='poolid']">
-    </div>
-    <br>
-    <div hx-get="/poolteams" hx-trigger="load" hx-include="[name='poolid']">
-    </div>
-    <br>
-    <div  hx-get="/poolplayers" hx-trigger="load" hx-include="[name='poolid']">    
+<div class="columns">
+    <div class="column is-8 is-offset-2 is-full-mobile is-size-7-mobile">
+        <nav class="tabs is-boxed is-centered" hx-target="#tab-contents" _="on htmx:afterOnLoad take .is-active for event.target">
+            <div class="container">
+                <ul>
+                    <li class="tab is-active" hx-get="/poolevents" hx-include="[name='poolid']"><a >Evènements</a></li>
+                    <li class="tab" hx-get="/poolteams" hx-include="[name='poolid']"><a >Classement</a></li>
+                    <li class="tab" hx-get="/poolplayers" hx-include="[name='poolid']"><a >Stats des joueurs</a></li>
+                </ul>
+            </div>
+        </nav>
     </div>
 </div>
+<div id="tab-contents" hx-get="/poolevents" hx-trigger="load" hx-include="[name='poolid']"></div>

@@ -1,15 +1,10 @@
-<div class="columns">
-    <div class="column is-8 is-offset-2 is-full-mobile is-size-7-mobile">
-        <p><strong>Evènements de la poule</strong></p>
-        <p>{{ pool_gender }} {{ pool_age }}</p>
-    </div>
-</div>
 {% if poolevents %}
 {% for poolevent in poolevents %}
 <div class="columns">
     <div class="column is-4 is-offset-2 is-full-mobile is-size-7-mobile" style="border-bottom: 1px solid;">
         <p style="float: left; font-weight: bold;">J{{ poolevent.date_day }}</p>
         <p style="float: right; font-style: italic;"><i>{{ poolevent.date_date|date:'d-m-Y' }} {{ poolevent.date_hour|stringformat:"02d" }}:{{ poolevent.date_minute|stringformat:"02d" }}</i></p>
+        <p style="text-align: center"><a href={{ poolevent.fdm }}>{% if poolevent.team_1_score != None %}FdM{% endif %}</a></p>
         <div style="clear: both;"></div>
         <p style="float: left;">{{ poolevent.team_0_name }}</p>
         <p style="float: right;">{% if poolevent.team_0_score == None %}-{% else %}{{ poolevent.team_0_score }}{% endif %}</p>
@@ -22,8 +17,7 @@
         <p style="float: left;">{{ poolevent.location_0 }}<br>{{ poolevent.location_1 }}<br>{{ poolevent.location_2 }}</p>
         <p style="float: right;">ARBITRES<br>{{ poolevent.referee_0_name }}<br>{{ poolevent.referee_1_name }}</p>
         <div style="clear: both;"></div>
-        <p style="float: right;"><a href={{ poolevent.fdm }}>{% if poolevent.team_1_score != None %}FdM{% endif %}</a></p>
-        <div style="clear: both;"></div>
+        
     </div>
 </div>
 {% endfor %}
