@@ -1,21 +1,26 @@
-<div class="box" id="categories">
-    <p><strong>Les compétitions</strong></p>
-    <br>
-    <div class="field">
-        <div class="control">
-            <div class="select is-fullwidth">
-                <select hx-get="/championships"
-                    name="categoryid"
-                    hx-target="#championships">
-                    <option selected> -- Choisissez une catégorie de championnat -- </option>
-                    <option value='D'>Championnats départementaux</option>
-                    <option value='R'>Championnats régionaux</option>
-                </select>
+<div class="box">
+    <div class="columns">
+        <div class="column is-8 is-offset-2 is-full-mobile is-size-7-mobile">
+            <p><strong>Les compétitions</strong></p>
+            <br>
+            <div id="categories">
+                <div class="field">
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select hx-get="/championships"
+                                name="categoryid"
+                                hx-target="#championships">
+                                <option selected> -- Choisissez une catégorie de championnat -- </option>
+                                <option value='D'>Championnats départementaux</option>
+                                <option value='R'>Championnats régionaux</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="field">
-        <div id="championships">
+            <div id="championships"></div>
+            <div id="competitions"></div>
+            <div id="pools"></div>
         </div>
     </div>
 </div>

@@ -1,20 +1,14 @@
-<div id="championships"></div>
-    <div class="field">
-        <div class="control">
-            <div class="select is-fullwidth">
-                <select hx-get="/competitions"
-                    name="championshipid"
-                    hx-target="#competitions">
-                <option selected> -- Choisissez un championnat -- </option>
-                {% for championship in championships %}
-                <option value={{ championship.id }}>{{ championship.code }} - {{ championship.name }}</option>
-                {% endfor %}
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="field">
-        <div id="competitions">
+<div class="field">
+    <div class="control">
+        <div class="select is-fullwidth">
+            <select hx-get="/competitions"
+                name="championshipid"
+                hx-target="#competitions">
+            <option selected> -- Choisissez un championnat -- </option>
+            {% for championship in championships %}
+            <option value={{ championship.id }}>{{ championship.code }} - {{ championship.name }}</option>
+            {% endfor %}
+            </select>
         </div>
     </div>
 </div>

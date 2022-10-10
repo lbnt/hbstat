@@ -1,16 +1,14 @@
-<div id="pools"></div>
-    <div class="field">
-        <div class="control">
-            <div class="select  is-fullwidth">
-                <select hx-get="/poolsdata"
-                    name="poolid"
-                    hx-target="#poolsdata">
-                <option selected> -- Choisissez une poule -- </option>
-                {% for pool in pools %}
-                    <option value={{ pool.id }}>{{ pool.phase_name }} - {{ pool.name }}</option>
-                {% endfor %}
-                </select>
-            </div>
+<div class="field">
+    <div class="control">
+        <div class="select  is-fullwidth">
+            <select hx-get="/poolsdata"
+                name="poolid"
+                hx-target="#poolsdata">
+            <option selected> -- Choisissez une poule -- </option>
+            {% for pool in pools %}
+                <option value={{ pool.id }}>{{ pool.phase_name }} - {{ pool.name }}</option>
+            {% endfor %}
+            </select>
         </div>
     </div>
 </div>
