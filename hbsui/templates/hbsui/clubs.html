@@ -1,33 +1,49 @@
 <div class="box">
-    <p><strong>Recherche de clubs</strong></p>
-    <p>Renseignez vos critères de recherche (sans accents)</p>
-    <br>
-    <form>
-        <div class="field">
-            <label class="label">Nom du club</label>
-            <div class="control">
-                <input name="name" type="text">
-            </div>
+    <div class="columns">
+        <div class="column is-8 is-offset-2 is-full-mobile is-size-7-mobile">
+            <p><strong>Recherche de clubs</strong></p>
+            <p>Renseignez vos critères de recherche (sans accent)</p>
+            <br>
+            <form>
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label class="label is-size-7-mobile">Nom du club</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input is-size-7-mobile" name="name" type="text">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label class="label is-size-7-mobile">N° de département</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input is-size-7-mobile" name="departement" type="text">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button
+                            class="button is-primary is-size-7-mobile"
+                            hx-trigger="click"
+                            hx-get="/searchclubs/" 
+                            hx-target="#searchresults"
+                            hx-include="[name='name'],[name='departement']">
+                            Rechercher
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="field">
-            <label class="label">Numéro de département (00-99)</label>
-            <div class="control">
-                <input name="departement" type="text">
-            </div> 
-        </div>
-        <div class="field">
-            <div class="control">
-                <button
-                    class="button is-primary"
-                    hx-trigger="click"
-                    hx-get="/searchclubs/" 
-                    hx-target="#searchresults"
-                    hx-include="[name='name'],[name='departement']">
-                    Rechercher
-                </button>
-            </div>
-        </div>
-    </form>
+    </div>
 </div>
 <div class="box">
     <div id="searchresults"></div>

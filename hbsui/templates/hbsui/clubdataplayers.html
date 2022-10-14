@@ -1,6 +1,6 @@
 <h2 class="subtitle">{{ nbresults }} joueurs ont joué au moins un match</h2>
 {% if players %}
-    <table class="table is-fullwidth is-hoverable">
+    <table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
         <thead>
             <tr>
                 <th>Nom</th>
@@ -20,7 +20,7 @@
         
     </table>
     {% if players.has_other_pages %}
-        <nav class="pagination" role="navigation" aria-label="pagination">
+        <nav class="pagination is-size-7-mobile" role="navigation" aria-label="pagination">
             {% if players.has_previous %}
             <a class="pagination-previous"
                 hx-get="/clubdataplayers/" 

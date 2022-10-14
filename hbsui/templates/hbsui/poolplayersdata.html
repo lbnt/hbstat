@@ -27,7 +27,7 @@
         
     </table>
     {% if poolplayers.has_other_pages %}
-        <nav class="pagination" role="navigation" aria-label="pagination">
+        <nav class="pagination is-size-7-mobile" role="navigation" aria-label="pagination">
             {% if poolplayers.has_previous %}
             <a class="pagination-previous"
                 hx-get="/poolplayersdata/"
@@ -82,5 +82,3 @@
 {% else %}
 Pas de données!
 {% endif %}
-<br>
-<br>

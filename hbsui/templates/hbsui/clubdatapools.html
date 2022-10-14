@@ -1,6 +1,6 @@
 <h2 class="subtitle">Ce club a participé aux {{ nbresults }} compétitions suivantes :</h2>
 {% if clubpools %}
-    <table class="table is-fullwidth is-hoverable">
+    <table class="table is-fullwidth is-hoverable is-size-7-mobile">
         <thead>
             <tr>
                 <th>Compétition</th>
@@ -19,7 +19,7 @@
         {% endfor %}
     </table>
     {% if clubpools.has_other_pages %}
-        <nav class="pagination" role="navigation" aria-label="pagination">
+        <nav class="pagination is-size-7-mobile" role="navigation" aria-label="pagination">
             {% if clubpools.has_previous %}
             <a class="pagination-previous"
                 hx-get="/clubdatapools/" 
