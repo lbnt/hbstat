@@ -1,0 +1,45 @@
+<div class="box">
+    <div class="columns">
+        <div class="column is-8 is-offset-2 is-full-mobile is-size-7-mobile">
+            <h1 class="title has-text-primary">Tous vos résultats et statistiques handball</h1>
+            <h2 class="subtitle">Saison 2022/2023</h2>
+            <div class="tile is-ancestor">
+                <div class="tile is-vertical is-12">
+                    <div class="tile">
+                        <div class="tile is-parent is-vertical">
+                            <article class="tile is-child notification is-primary">
+                                <p class="title">Matchs</p>
+                                <p class="subtitle">{{nbpoolevents}} </p>
+                                <br>
+                                <p class="title">Poules</p>
+                                <p class="subtitle">{{nbpools}}</p>
+                            </article>
+                            <article class="tile is-child notification is-warning">
+                                <p class="title">Buts</p>
+                                <p class="subtitle">{{nbgoals.scored__sum}} </p>
+                            </article>
+                        </div>
+                        <div class="tile is-parent">
+                            <article class="tile is-child notification is-info">
+                                <p class="title">Joueurs</p>
+                                <p class="subtitle">{{nbplayers}} </p>
+                                <br>
+                                <p class="title">Equipes</p>
+                                <p class="subtitle">{{nbpoolteams}} </p>
+                                <br>
+                                <p class="title">Clubs</p>
+                                <p class="subtitle">{{nbclubs}}</p>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification is-danger">
+                            <p class="title">Matchs</p>
+                            <p class="subtitle">{{nbpoolevents}} </p>
+                        </article>
+                    </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>

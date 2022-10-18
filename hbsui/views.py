@@ -18,9 +18,15 @@ from hbsui.models import DPoolPlayerStat
 from hbsui.models import DPlayer
 
 # Create your views here.
-def hello(request):
-    c=DChampionship.objects.get(pk=5100000)
-    return render(request, 'hbsui/hello.html', {'champ': c})
+def welcome(request):
+    mynbplayers=DPlayer.objects.count()
+    mynbpoolteams=DPoolTeam.objects.count()
+    mynbclubs=DClub.objects.count()
+    mynbpoolevents=DPoolEvent.objects.count()
+    mynbpools=DPool.objects.count()
+    mynbgoals=DPoolTeam.objects.aggregate(Sum('scored'))
+    
+    return render(request, 'hbsui/welcome.html', {'nbplayers': mynbplayers, 'nbpoolteams': mynbpoolteams, 'nbgoals' : mynbgoals, 'nbclubs': mynbclubs, 'nbpoolevents': mynbpoolevents, 'nbpools': mynbpools} )
 
 def acceuil(request):
     return render(request, 'hbsui/acceuil.html')

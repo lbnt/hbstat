@@ -19,7 +19,7 @@ from hbsui import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello/', views.hello),
+    path('welcome/', views.welcome),
     path('acceuil/', views.acceuil),
     path('', views.acceuil),
     path('main/', views.main),

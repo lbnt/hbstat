@@ -45,16 +45,13 @@
                             <a class="button is-primary" href="https://github.com/lbnt/hbstat">
                                 Github
                             </a>
-                            <a class="button is-light" href="mailto:mathieu@lbnt.fr">
-                                Contact
-                            </a>
                         </div>
                     </div>
                 </div>
             </nav>
         </div>
         <main>
-            <div class="container" id="main"></div>
+            <div class="container" id="main" hx-get="/welcome" hx-trigger="load"></div>
         </main>
 
         <footer></footer>
