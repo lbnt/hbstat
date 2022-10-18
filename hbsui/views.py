@@ -57,7 +57,7 @@ def poolevents(request):
 
 def poolteams(request):
     mypoolid = request.GET.get('poolid','')
-    poolteams = DPoolTeam.objects.filter(pool=mypoolid)
+    poolteams = DPoolTeam.objects.filter(pool=mypoolid).order_by('position')
     return render(request, 'hbsui/poolteams.html', {'poolteams': poolteams})
 
 def poolplayers(request):
