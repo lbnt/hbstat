@@ -1,4 +1,5 @@
 from math import ceil
+import datetime
 
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -13,6 +14,7 @@ from hbsui.models import DCompetition
 from hbsui.models import DPool
 from hbsui.models import DPoolTeam
 from hbsui.models import DPoolEvent
+from hbsui.models import DPoolDate
 from hbsui.models import DPoolPlayer
 from hbsui.models import DPoolPlayerStat
 from hbsui.models import DPlayer
@@ -22,11 +24,13 @@ def welcome(request):
     mynbplayers=DPlayer.objects.count()
     mynbpoolteams=DPoolTeam.objects.count()
     mynbclubs=DClub.objects.count()
-    mynbpoolevents=DPoolEvent.objects.count()
+    mynbpooleventspast=DPoolEvent.objects.exclude(date_date__gte = datetime.datetime.now()).count()
+    mynbpooleventsfuture=DPoolEvent.objects.filter(date_date__gte = datetime.datetime.now()).count()
+    print(DPoolEvent.objects.count())
     mynbpools=DPool.objects.count()
     mynbgoals=DPoolTeam.objects.aggregate(Sum('scored'))
     
-    return render(request, 'hbsui/welcome.html', {'nbplayers': mynbplayers, 'nbpoolteams': mynbpoolteams, 'nbgoals' : mynbgoals, 'nbclubs': mynbclubs, 'nbpoolevents': mynbpoolevents, 'nbpools': mynbpools} )
+    return render(request, 'hbsui/welcome.html', {'nbplayers': mynbplayers, 'nbpoolteams': mynbpoolteams, 'nbgoals' : mynbgoals, 'nbclubs': mynbclubs, 'nbpooleventspast': mynbpooleventspast,'nbpooleventsfuture': mynbpooleventsfuture, 'nbpools': mynbpools} )
 
 def acceuil(request):
     return render(request, 'hbsui/acceuil.html')
