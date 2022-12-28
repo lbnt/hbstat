@@ -32,7 +32,7 @@
             <a class="pagination-previous"
                 hx-get="/poolplayersdata/"
                 hx-target="#poolplayersdata"
-                hx-include="[name='poolid'],[name='clubid']"
+                hx-include="[name='poolid'],[name='clubid'],[name='orderby']"
                 hx-vals='{"page": {{ poolplayers.number|add:"-1" }}}'>
             Précédent
             </a>
@@ -44,7 +44,7 @@
             <a class="pagination-next"
                 hx-get="/poolplayersdata/"
                 hx-target="#poolplayersdata"
-                hx-include="[name='poolid'],[name='clubid']"
+                hx-include="[name='poolid'],[name='clubid'],[name='orderby']"
                 hx-vals='{"page": {{ poolplayers.number|add:"1" }}}'>
                 Suivant
             </a>
@@ -58,7 +58,7 @@
                     <a class="pagination-link is-current"
                         hx-get="/poolplayersdata/"
                         hx-target="#poolplayersdata"
-                        hx-include="[name='poolid'],[name='clubid']"
+                        hx-include="[name='poolid'],[name='clubid'],[name='orderby']"
                         hx-vals='{"page": {{ i }}}'>
                         {{ i }}
                     </a>
@@ -69,7 +69,7 @@
                         <a class="pagination-link" 
                             hx-get="/poolplayersdata/"
                             hx-target="#poolplayersdata"
-                            hx-include="[name='poolid'],[name='clubid']"
+                            hx-include="[name='poolid'],[name='clubid'],[name='orderby']"
                             hx-vals='{"page": {{ i }}}'>
                             {{ i }}
                         </a>

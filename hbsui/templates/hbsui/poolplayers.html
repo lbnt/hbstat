@@ -10,7 +10,7 @@
                             name="clubid"
                             hx-target="#poolplayersdata"
                             hx-include="[name='poolid'],[name='orderby']" >
-                            <option value='all' selected> -- Choisissez une club -- </option>
+                            <option value='all' selected> -- Choisissez un club -- </option>
                             <option value='all'>Tous les clubs</option>
                             {% for poolclub in poolclubs %}
                             <option value={{ poolclub.player__club__id }}>{{ poolclub.player__club__name }}</option>
@@ -26,7 +26,7 @@
                             name="orderby"
                             hx-target="#poolplayersdata"
                             hx-include="[name='poolid'],[name='clubid']" >
-                            <option value='-match_played' selected> -- Choisissez une classement -- </option>
+                            <option value='-goal' selected> -- Choisissez un classement -- </option>
                             <option value='-match_played'>Nb de matchs joués</option>
                             <option value='-goal'>Buts marqués</option>
                             <option value='-saves'>Arrêts</option>

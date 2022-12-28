@@ -1,5 +1,6 @@
 from math import ceil
 import datetime
+from unidecode import unidecode
 
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -111,11 +112,11 @@ def searchplayers(request):
     filterdict = {}
 
     if len(myfirst_name) > 0:
-        filterdict['first_name__icontains'] = myfirst_name
+        filterdict['first_name__icontains'] = unidecode(myfirst_name)
     if len(mylast_name) > 0:
-        filterdict['last_name__icontains'] = mylast_name
+        filterdict['last_name__icontains'] = unidecode(mylast_name)
     if len(myname) > 0:
-        filterdict['club__name__icontains'] = myname
+        filterdict['club__name__icontains'] = unidecode(myname)
     if mygender == 'M' or mygender == 'F' :
         filterdict['gender'] = mygender
     
@@ -155,7 +156,7 @@ def searchclubs(request):
     filterdict = {}
 
     if len(myname) > 0:
-        filterdict['name__icontains'] = myname
+        filterdict['name__icontains'] = unidecode(myname)
     
     if len(mydepartement) >= 1:
         filterdict['departement__exact'] = mydepartement
