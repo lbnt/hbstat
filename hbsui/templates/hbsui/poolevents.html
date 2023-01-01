@@ -21,6 +21,14 @@
     </div>
 </div>
 {% endfor %}
+<div class="columns">
+    <div class="column is-8 is-offset-2 is-full-mobile is-size-7-mobile">
+        <p style="text-align: center">
+            <a href="/pooleventscsv/?poolid={{ poolid }}">Télécharger ces données au format CSV</a>
+        </p>
+        <div style="clear: both;"></div>
+    </div>
+</div>
 {% else %}
 Pas de données d'évènements pour cette poule!
 {% endif %}

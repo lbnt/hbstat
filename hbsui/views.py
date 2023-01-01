@@ -1,6 +1,7 @@
 from math import ceil
 import datetime
 from unidecode import unidecode
+import csv
 
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -64,17 +65,63 @@ def poolevents(request):
     mypoolid = request.GET.get('poolid','')
     mypool = DPool.objects.get(pk=mypoolid)
     poolevents = DPoolEvent.objects.filter(pool=mypoolid)
-    return render(request, 'hbsui/poolevents.html', {'poolevents':poolevents,'pool_gender':mypool.get_gender_display(),'pool_age':mypool.get_age_display()})
+    return render(request, 'hbsui/poolevents.html', {'poolid':mypoolid,'poolevents':poolevents,'pool_gender':mypool.get_gender_display(),'pool_age':mypool.get_age_display()})
+
+def pooleventscsv(request):
+    
+    mypoolid = request.GET.get('poolid','')
+    mypool = DPool.objects.get(pk=mypoolid)
+    poolevents = DPoolEvent.objects.filter(pool=mypoolid)
+
+    csvfilename = mypool.competition.championship.code + "_" + mypool.competition.name + "_" + mypool.phase_name + "_" + mypool.name + "_resultats.csv";
+
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename='+csvfilename},
+    )
+
+    writer = csv.writer(response)
+    
+    if poolevents:
+        writer.writerow(["journée", "date", "heures", "minutes", "équipe_0", "score_0", "équipe_1", "score_1", "lieu_0", "lieu_1", "lieu_2", "arbitre_0", "arbitre_1", "feuille_de_match"])
+
+        for poolevent in poolevents:
+            writer.writerow([poolevent.date_day, poolevent.date_date, poolevent.date_hour, poolevent.date_minute, poolevent.team_0_name, poolevent.team_0_score, poolevent.team_1_name, poolevent.team_1_score, poolevent.location_0, poolevent.location_1, poolevent.location_2, poolevent.referee_0_name, poolevent.referee_1_name, poolevent.fdm])
+
+    return response
 
 def poolteams(request):
     mypoolid = request.GET.get('poolid','')
     poolteams = DPoolTeam.objects.filter(pool=mypoolid).order_by('position')
-    return render(request, 'hbsui/poolteams.html', {'poolteams': poolteams})
+    return render(request, 'hbsui/poolteams.html', {'poolid':mypoolid,'poolteams': poolteams})
+
+def poolteamscsv(request):
+    
+    mypoolid = request.GET.get('poolid','')
+    mypool = DPool.objects.get(pk=mypoolid)
+    poolteams = DPoolTeam.objects.filter(pool=mypoolid).order_by('position')
+    
+    csvfilename = mypool.competition.championship.code + "_" + mypool.competition.name + "_" + mypool.phase_name + "_" + mypool.name + "_classement.csv";
+
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename='+csvfilename},
+    )
+
+    writer = csv.writer(response)
+    
+    if poolteams:
+        writer.writerow(["classement", "équipe", "nb_matchs_joués", "points", "victoires", "nuls", "défaites", "buts+", "buts-", "diff"])
+
+        for poolteam in poolteams:
+            writer.writerow([poolteam.position, poolteam.team_name, poolteam.games, poolteam.points, poolteam.wins, poolteam.draws, poolteam.defeats, poolteam.scored, poolteam.missed, poolteam.difference])
+
+    return response
 
 def poolplayers(request):
     mypoolid = request.GET.get('poolid','')
     mypoolclubs=DPoolPlayer.objects.filter(pool=mypoolid).values('player__club__name','player__club__id').annotate(Sum('goal'))
-    return render(request, 'hbsui/poolplayers.html', {'poolclubs':mypoolclubs})
+    return render(request, 'hbsui/poolplayers.html', {'poolid':mypoolid, 'poolclubs':mypoolclubs})
 
 def poolplayersdata(request):
     mypoolid = request.GET.get('poolid','')
@@ -95,6 +142,30 @@ def poolplayersdata(request):
     page_range = paginator.get_elided_page_range(number=page)
 
     return render(request, 'hbsui/poolplayersdata.html', {'poolplayers':poolplayers, 'nbresults':mynbresults, 'page_range':page_range})
+
+def poolplayersdatacsv(request):
+    mypoolid = request.GET.get('poolid','')
+    
+    mypool = DPool.objects.get(pk=mypoolid)
+    
+    mypoolplayers=DPoolPlayer.objects.filter(pool=mypoolid)
+    
+    csvfilename = mypool.competition.championship.code + "_" + mypool.competition.name + "_" + mypool.phase_name + "_" + mypool.name + "_joueurs.csv";
+
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename='+csvfilename},
+    )
+
+    writer = csv.writer(response)
+    
+    if mypoolplayers:
+        writer.writerow(["club", "nom", "prénom", "nb_matchs_joués", "buts", "arrêts", "moyenne_buts", "moyenne_arrêts"])
+
+        for mypoolplayer in mypoolplayers:
+            writer.writerow([mypoolplayer.player.club.name, mypoolplayer.player.last_name, mypoolplayer.player.first_name, mypoolplayer.match_played, mypoolplayer.goal, mypoolplayer.saves, mypoolplayer.avg, mypoolplayer.avg_stop])
+
+    return response
 
 def clubs(request):
     return render(request, 'hbsui/clubs.html')

@@ -37,6 +37,11 @@
                 </div>
             </div>
         </form>
-        <div id="poolplayersdata"></div>
+        <div id="poolplayersdata" hx-get="/poolplayersdata/" hx-trigger="load" hx-include="[name='poolid'],[name='clubid'],[name='orderby']"></div>
+        <br>
+        <p style="text-align: center">
+            <a href="/poolplayersdatacsv/?poolid={{ poolid }}">Télécharger ces données au format CSV</a>
+        </p>
+        <div style="clear: both;"></div>
     </div>
 </div>

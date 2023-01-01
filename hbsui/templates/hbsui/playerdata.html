@@ -5,11 +5,11 @@
 			<p><strong>{{ player.last_name }} {{ player.first_name|lower|capfirst }}</strong></p>
 			<p>{{ player.club.name }}</p>
 			<br>
-			<p>Statistiques par phase/poule</p>
+			<p>Statistiques par compétition/poule</p>
 			<table class="table is-narrow is-fullwidth is-hoverableis-size-7-mobile">
 				<thead>
 					<tr>
-						<th>Phase</th>
+						<th>Compétition</th>
 						<th>Poule</th>
 						<th>Nb matchs</th>
 						<th>But</th>
@@ -22,7 +22,7 @@
 				<tbody>
 					<tr hx-get="/playerdatastat" hx-target="#playerdatastat" hx-trigger="click" hx-vals='{"id": {{ playerpool.pool.id }},"id": {{ player.id }}}'>
 						<td>{{ playerpool.pool.competition.name }}</td>
-						<td>{{ playerpool.pool.phase_name }}</td>
+						<td>{{ playerpool.pool.name }}</td>
 						<td>{{ playerpool.match_played }}</td>
 						<td>{{ playerpool.goal }}</td>
 						<td>{{ playerpool.saves }}</td>
