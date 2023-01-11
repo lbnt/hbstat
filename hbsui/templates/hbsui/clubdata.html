@@ -1,14 +1,12 @@
 <div class="modal is-active">
 	<div class="modal-background"></div>
 	<div class="modal-content">
-		<div class="box">
-			<p><strong>{{ club.name }}</strong></p>
-            <div id="clubdataplayers" hx-get="/clubdataplayers" hx-trigger="load" hx-vals='{"id": {{ club.id }}}'></div>
-			<br>
-			<div id="clubdatapools" hx-get="/clubdatapools" hx-trigger="load" hx-vals='{"id": {{ club.id }}}'></div>
-			<br>
-			<button class="button is-size-7-mobile" hx-get="/emptymodal" hx-target="#modalclubdata">Fermer</button>
-		</div>
+		<p><strong>{{ club.name }}</strong></p>
+		<div id="clubdataplayers" hx-get="/clubdataplayers" hx-trigger="load" hx-vals='{"id": {{ club.id }}}'></div>
+		<br>
+		<div id="clubdatapools" hx-get="/clubdatapools" hx-trigger="load" hx-vals='{"id": {{ club.id }}}'></div>
+		<br>
+		<button class="button is-size-7-mobile" hx-get="/emptymodal" hx-target="#modalclubdata">Fermer</button>
 		<button class="modal-close" aria-label="close" hx-get="/emptymodal" hx-target="#modalclubdata"></button>
 	</div>
 </div>

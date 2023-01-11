@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 
 from django.db.models import Sum
 from django.db.models import Count
+from django.db.models import Avg
 
 from hbsui.models import DChampionship, DClub
 from hbsui.models import DCompetition
@@ -44,19 +45,28 @@ def categories(request):
     return render(request, 'hbsui/categories.html')
 
 def championships(request):
-    mycategory = request.GET.get('categoryid','D')
-    mychampionships = DChampionship.objects.filter(category=mycategory).order_by('code')
-    return render(request, 'hbsui/championships.html', {'championships': mychampionships})
+    mycategory = request.GET.get('categoryid','')
+    if mycategory != '':
+        mychampionships = DChampionship.objects.filter(category=mycategory).order_by('code')
+        return render(request, 'hbsui/championships.html', {'championships': mychampionships})
+    else:
+        return HttpResponse('<div id="championships"></div>')
 
 def competitions(request):
     mychampionshipid = request.GET.get('championshipid','')
-    mycompetitions = DCompetition.objects.filter(championship=mychampionshipid)
-    return render(request, 'hbsui/competitions.html', {'competitions': mycompetitions})
+    if mychampionshipid != '':
+        mycompetitions = DCompetition.objects.filter(championship=mychampionshipid)
+        return render(request, 'hbsui/competitions.html', {'competitions': mycompetitions})
+    else:
+        return HttpResponse('<div id="competitions"></div>')
 
 def pools(request):
     mycompetitionid = request.GET.get('competitionid','')
-    mypools = DPool.objects.filter(competition=mycompetitionid)
-    return render(request, 'hbsui/pools.html', {'pools': mypools})
+    if mycompetitionid != '':
+        mypools = DPool.objects.filter(competition=mycompetitionid)
+        return render(request, 'hbsui/pools.html', {'pools': mypools})
+    else:
+        return HttpResponse('<div id="pools"></div>')
 
 def poolsdata(request):
     return render(request, 'hbsui/poolsdata.html')
@@ -205,15 +215,16 @@ def playerdata(request):
     
     myplayer=DPlayer.objects.get(id=myplayerid)
     myplayerpools=DPoolPlayer.objects.filter(player=myplayerid)
-    
-    return render(request, 'hbsui/playerdata.html', {'player':myplayer,'playerpools':myplayerpools})
+    myplayerstatscount=DPoolPlayerStat.objects.filter(player=myplayerid).count()
+    myplayerstats=DPoolPlayerStat.objects.filter(player=myplayerid).aggregate(Sum('goal'), Avg('goal'), Avg('saves'), Sum('saves'), Sum('mins'), Sum('warn'), Sum('dis'))
+    return render(request, 'hbsui/playerdata.html', {'player':myplayer,'playerpools':myplayerpools,'playerstats':myplayerstats,'playerstatscount':myplayerstatscount})
 
 def playerdatastat(request):
-    mypoolid = request.GET.get('id','')
-    myplayerid = request.GET.get('id','')
+    mypoolid = request.GET.get('poolid','')
+    myplayerid = request.GET.get('playerid','')
     
     mypool = DPool.objects.get(id=mypoolid)
-    myplayerpoolstats=DPoolPlayerStat.objects.filter(player=myplayerid,pool=mypoolid)
+    myplayerpoolstats=DPoolPlayerStat.objects.filter(player=myplayerid,pool=mypoolid)  
     return render(request, 'hbsui/playerdatastat.html', {'pool':mypool,'playerpoolstats':myplayerpoolstats})
 
 def emptymodal(request):

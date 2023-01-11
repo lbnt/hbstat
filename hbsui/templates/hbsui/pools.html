@@ -3,7 +3,8 @@
         <div class="select  is-fullwidth is-size-7-mobile">
             <select hx-get="/poolsdata"
                 name="poolid"
-                hx-target="#poolsdata">
+                hx-target="#poolsdata"
+                _="on change show #poolsdata">
             <option selected> -- Choisissez une poule -- </option>
             {% for pool in pools %}
                 <option value={{ pool.id }}>{{ pool.phase_name }} - {{ pool.name }}</option>

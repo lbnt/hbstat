@@ -3,8 +3,9 @@
         <div class="select is-fullwidth is-size-7-mobile">
             <select hx-get="/competitions"
                 name="championshipid"
-                hx-target="#competitions">
-            <option selected> -- Choisissez un championnat -- </option>
+                hx-target="#competitions"
+                _="on change show #competitions then hide #pools then hide #poolsdata">
+            <option selected value=''> -- Choisissez un championnat -- </option>
             {% for championship in championships %}
             <option value={{ championship.id }}>{{ championship.code }} - {{ championship.name }}</option>
             {% endfor %}

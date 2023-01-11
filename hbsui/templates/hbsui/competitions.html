@@ -3,8 +3,9 @@
         <div class="select is-fullwidth is-size-7-mobile">
             <select hx-get="/pools"
                 name="competitionid"
-                hx-target="#pools">
-            <option selected> -- Choisissez une compétition -- </option>
+                hx-target="#pools"
+                _="on change show #pools then hide #poolsdata">
+            <option selected value=''> -- Choisissez une compétition -- </option>
             {% for competition in competitions %}
                 <option value={{ competition.id }}>{{ competition.name }}</option>
             {% endfor %}
