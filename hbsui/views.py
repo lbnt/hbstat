@@ -29,7 +29,6 @@ def welcome(request):
     mynbclubs=DClub.objects.count()
     mynbpooleventspast=DPoolEvent.objects.exclude(date_date__gte = datetime.datetime.now()).count()
     mynbpooleventsfuture=DPoolEvent.objects.filter(date_date__gte = datetime.datetime.now()).count()
-    print(DPoolEvent.objects.count())
     mynbpools=DPool.objects.count()
     mynbgoals=DPoolTeam.objects.aggregate(Sum('scored'))
     

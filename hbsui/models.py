@@ -92,6 +92,14 @@ class DPlayer(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    game = models.IntegerField(blank=True, null=True)
+    goal = models.IntegerField(blank=True, null=True)
+    avg_goal = models.FloatField(blank=True, null=True)
+    save = models.IntegerField(blank=True, null=True)
+    avg_save = models.FloatField(blank=True, null=True)
+    mins = models.IntegerField(blank=True, null=True)
+    warn = models.IntegerField(blank=True, null=True)
+    dis = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = True
