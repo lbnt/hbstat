@@ -24,11 +24,11 @@ def update_player_stats():
         myplayerstats=DPoolPlayerStat.objects.filter(player=myplayer.id).aggregate(Sum('goal'), Avg('goal'), Avg('saves'), Sum('saves'), Sum('mins'), Sum('warn'), Sum('dis'))
         
         DPlayer.objects.filter(id=myplayer.id).update(
-            game = myplayerstatscount,
-            goal = myplayerstats['goal__sum'],
-            avg_goal = myplayerstats['goal__avg'],
-            save = myplayerstats['saves__sum'],
-            avg_save = myplayerstats['saves__avg'],
+            games = myplayerstatscount,
+            goals = myplayerstats['goal__sum'],
+            avg_goals = myplayerstats['goal__avg'],
+            saves = myplayerstats['saves__sum'],
+            avg_saves = myplayerstats['saves__avg'],
             mins = myplayerstats['mins__sum'],
             warn = myplayerstats['warn__sum'],
             dis = myplayerstats['dis__sum']

@@ -10,6 +10,10 @@ from hbsui.models import DPoolPlayer
 from hbsui.models import DPoolPlayerStat
 from hbsui.models import DPlayer
 
+from django.db.models import Sum
+from django.db.models import Count
+from django.db.models import Avg
+
 import requests
 import json
 import hashlib
@@ -256,8 +260,6 @@ def scrap(category):
                                                 print("--- --- --- --- Updating player "+id+" stat in pool "+str(pool['poolId']))
                                                 pool_player_stat_id = str(pool['poolId'])+"_"+id+"_"+str(game)
                                                 
-                                                #player_obj = DPlayer.objects.get(pk=id)
-
                                                 DPoolPlayerStat.objects.update_or_create(
                                                     id=pool_player_stat_id,
                                                     defaults = {
@@ -273,6 +275,23 @@ def scrap(category):
                                                 )
                                                 
                                                 game += 1
+
+                                            # pool stats habe been updated, now update the global stats
+                                            print("--- --- --- --- Updating player "+id+" global stats")
+                                            
+                                            myplayerstatscount=DPoolPlayerStat.objects.filter(player=id).count()
+                                            myplayerstats=DPoolPlayerStat.objects.filter(player=id).aggregate(Sum('goal'), Avg('goal'), Avg('saves'), Sum('saves'), Sum('mins'), Sum('warn'), Sum('dis'))
+                                            
+                                            DPlayer.objects.filter(id=id).update(
+                                                games = myplayerstatscount,
+                                                goals = myplayerstats['goal__sum'],
+                                                avg_goals = myplayerstats['goal__avg'],
+                                                saves = myplayerstats['saves__sum'],
+                                                avg_saves = myplayerstats['saves__avg'],
+                                                mins = myplayerstats['mins__sum'],
+                                                warn = myplayerstats['warn__sum'],
+                                                dis = myplayerstats['dis__sum']
+                                            )
                             #end download pool players stats
 
     
