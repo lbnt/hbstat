@@ -214,9 +214,7 @@ def playerdata(request):
     
     myplayer=DPlayer.objects.get(id=myplayerid)
     myplayerpools=DPoolPlayer.objects.filter(player=myplayerid)
-    myplayerstatscount=DPoolPlayerStat.objects.filter(player=myplayerid).count()
-    myplayerstats=DPoolPlayerStat.objects.filter(player=myplayerid).aggregate(Sum('goal'), Avg('goal'), Avg('saves'), Sum('saves'), Sum('mins'), Sum('warn'), Sum('dis'))
-    return render(request, 'hbsui/playerdata.html', {'player':myplayer,'playerpools':myplayerpools,'playerstats':myplayerstats,'playerstatscount':myplayerstatscount})
+    return render(request, 'hbsui/playerdata.html', {'player':myplayer,'playerpools':myplayerpools})
 
 def playerdatastat(request):
     mypoolid = request.GET.get('poolid','')
@@ -285,3 +283,7 @@ def clubdatapools(request):
     page_range = paginator.get_elided_page_range(number=page)
 
     return render(request, 'hbsui/clubdatapools.html', {'clubpools':clubpools,'nbresults':mynbresults, 'page_range':page_range})
+
+def top(request):
+    mytopgoalscorers = DPlayer.objects.order_by('-goals')[:10]
+    return render(request, 'hbsui/top.html', {'topgoalscorers':mytopgoalscorers})
