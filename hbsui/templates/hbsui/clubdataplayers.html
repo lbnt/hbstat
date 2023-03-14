@@ -1,4 +1,4 @@
-<h2 class="subtitle">{{ nbresults }} joueurs ont joué au moins un match</h2>
+<p><strong>{{ nbresults }}</strong> joueurs ont joué au moins un match</p>
 {% if players %}
     <table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
         <thead>
@@ -24,7 +24,7 @@
             {% if players.has_previous %}
             <a class="pagination-previous"
                 hx-get="/clubdataplayers/" 
-                hx-target="#clubdataplayers"
+                hx-target="#tabcontents"
                 hx-vals='{"page": {{ players.number|add:"-1" }} }'>
                 Précédent
             </a>
@@ -35,7 +35,7 @@
             {% if players.has_next %}
             <a class="pagination-next"
                 hx-get="/clubdataplayers/" 
-                hx-target="#clubdataplayers"
+                hx-target="#tabcontents"
                 hx-vals='{"page": {{ players.number|add:"1" }} }'>
                 Suivant
             </a>
@@ -48,7 +48,7 @@
                 {% if players.number == i %}
                     <a class="pagination-link is-current"
                         hx-get="/clubdataplayers/" 
-                        hx-target="#clubdataplayers"
+                        hx-target="#tabcontents"
                         hx-vals='{"page": {{ i }} }'>
                         {{ i }}
                     </a>
@@ -58,7 +58,7 @@
                     {% else %}
                         <a class="pagination-link" 
                             hx-get="/clubdataplayers/" 
-                            hx-target="#clubdataplayers"
+                            hx-target="#tabcontents"
                             hx-vals='{"page": {{ i }} }'>
                             {{ i }}
                         </a>
@@ -69,5 +69,5 @@
         </nav>
     {% endif %}
 {% else %}
-    Pas de données!
+<p>Pas de données!</p>
 {% endif %}

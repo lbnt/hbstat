@@ -1,14 +1,14 @@
-<div class="modal is-active">
-	<div class="modal-background"></div>
-	<div class="modal-content">
-		<div class="box">
-			<p><strong>{{ club.name }}</strong></p>
-			<div id="clubdataplayers" hx-get="/clubdataplayers" hx-trigger="load" hx-vals='{"id": {{ club.id }}}'></div>
-			<br>
-			<div id="clubdatapools" hx-get="/clubdatapools" hx-trigger="load" hx-vals='{"id": {{ club.id }}}'></div>
-			<br>
-			<button class="button is-size-7-mobile" hx-get="/emptymodal" hx-target="#modalclubdata">Fermer</button>
-			<button class="modal-close" aria-label="close" hx-get="/emptymodal" hx-target="#modalclubdata"></button>
+<div>
+	<p class="title is-5">{{ club.name }}</p>
+	<br>
+	<nav class="tabs is-boxed is-centered is-size-7-mobile" hx-target="#tabcontents" _="on htmx:afterOnLoad take .is-active for event.target">
+		<div class="container">
+			<ul>
+				<li class="tab is-active" hx-get="/clubdataplayers/" hx-vals='{"id": {{ club.id }}}'><a >Joueurs</a></li>
+				<li class="tab" hx-get="/clubdatapools/" hx-vals='{"id": {{ club.id }}}'><a >Compétitions</a></li>
+			</ul>
 		</div>
-	</div>
+	</nav>
 </div>
+<br>
+<div id="tabcontents" hx-get="/clubdataplayers/" hx-trigger="load" hx-vals='{"id": {{ club.id }}}'></div>

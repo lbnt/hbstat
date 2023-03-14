@@ -1,7 +1,7 @@
 <div class="columns">
-    <div class="column is-8 is-offset-2 is-full-mobile is-size-7-mobile">
+    <div class="column is-8 is-offset-2 is-full-mobile">
         {% if topgoalscorers %}
-            <table class="table is-narrow is-fullwidth is-hoverable">
+            <table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
                 <thead>
                     <tr>
                         <th>Nom</th>
@@ -13,7 +13,7 @@
                 </thead>
                 {% for topgoalscorer in topgoalscorers %}
                 <tbody>
-                    <tr hx-get="/playerdata" hx-target="#modalplayerdata" hx-trigger="click" hx-vals='{"id": {{ topgoalscorer.id }}}'>
+                    <tr hx-get="/playerdata/" hx-target="#modalplayerdata" hx-trigger="click" hx-vals='{"id": {{ topgoalscorer.id }}}'>
                         <td><a>{{ topgoalscorer.last_name }}</a></td>
                         <td><a>{{ topgoalscorer.first_name|lower|capfirst }}</a></td>
                         <td><a>{{ topgoalscorer.gender }}</a></td>

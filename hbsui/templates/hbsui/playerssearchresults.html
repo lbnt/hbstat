@@ -1,85 +1,78 @@
-<div class="columns">
-    <div class="column is-8 is-offset-2 is-full-mobile is-size-7-mobile">
-        {% if players %}
-            <br>
-            <p>{{nbresults}} joueurs trouvés</p>
-            <br>
-            <table class="table is-narrow is-fullwidth is-hoverable">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>M/F</th>
-                        <th>Club</th>
-                    </tr>
-                </thead>
-                {% for player in players %}
-                <tbody>
-                    <tr hx-get="/playerdata" hx-target="#modalplayerdata" hx-trigger="click" hx-vals='{"id": {{ player.id }}}'>
-                        <td><a>{{ player.last_name }}</a></td>
-                        <td><a>{{ player.first_name|lower|capfirst }}</a></td>
-                        <td><a>{{ player.gender }}</a></td>
-                        <td><a>{{ player.club.name }}</a></td>
-                    </tr>
-                </tbody>
-                {% endfor %}
-            </table>
-            {% if players.has_other_pages %}
-                <nav class="pagination is-size-7-mobile" role="navigation" aria-label="pagination">
-                    {% if players.has_previous %}
-                    <a class="pagination-previous"
-                        hx-get="/searchplayers/" 
-                        hx-target="#searchresults"
-                        hx-include="[name='first_name'],[name='last_name'],[name='name'],[name='gender']"
-                        hx-vals='{"page": {{ players.number|add:"-1" }}}'>
-                    Précédent
-                    </a>
-                    {% else %}
-                    <a class="pagination-previous is-disabled">Précédent</a>
-                    {% endif %}
-                    
-                    {% if players.has_next %}
-                    <a class="pagination-next"
-                        hx-get="/searchplayers/" 
-                        hx-target="#searchresults"
-                        hx-include="[name='first_name'],[name='last_name'],[name='name'],[name='gender']"
-                        hx-vals='{"page": {{ players.number|add:"1" }}}'>
-                        Suivant
-                    </a>
-                    {% else %}
-                    <a class="pagination-next is-disabled">Suivant</a>
-                    {% endif %}
-
-                    <ul class="pagination-list"></ul>
-                    {% for i in page_range|default_if_none:players.paginator.get_elided_page_range %}
-                        {% if players.number == i %}
-                            <a class="pagination-link is-current"
-                                hx-get="/searchplayers/" 
-                                hx-target="#searchresults"
-                                hx-include="[name='first_name'],[name='last_name'],[name='name'],[name='gender']"
-                                hx-vals='{"page": {{ i }}}'>
-                                {{ i }}
-                            </a>
-                        {% else %}
-                            {% if i == players.paginator.ELLIPSIS %}
-                                <a class="pagination-link">{{ i }}</a>
-                            {% else %}
-                                <a class="pagination-link" 
-                                    hx-get="/searchplayers/" 
-                                    hx-target="#searchresults"
-                                    hx-include="[name='first_name'],[name='last_name'],[name='name'],[name='gender']"
-                                    hx-vals='{"page": {{ i }}}'>
-                                    {{ i }}
-                                </a>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                    </ul>
-                </nav>
+{% if players %}
+    <p><strong>{{nbresults}}</strong> joueurs</p>
+    <table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>M/F</th>
+                <th>Club</th>
+            </tr>
+        </thead>
+        {% for player in players %}
+        <tbody>
+            <tr hx-get="/playerdata/" hx-target="#results" hx-trigger="click" hx-vals='{"id": {{ player.id }}}' _="on click log 'clicked' then show #results">
+                <td><a>{{ player.last_name }}</a></td>
+                <td><a>{{ player.first_name|lower|capfirst }}</a></td>
+                <td><a>{{ player.gender }}</a></td>
+                <td><a>{{ player.club.name }}</a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% if players.has_other_pages %}
+        <nav class="pagination is-size-7-mobile" role="navigation" aria-label="pagination">
+            {% if players.has_previous %}
+            <a class="pagination-previous"
+                hx-get="/searchplayers/" 
+                hx-target="#search"
+                hx-include="[name='first_name'],[name='last_name'],[name='name'],[name='gender']"
+                hx-vals='{"page": {{ players.number|add:"-1" }}}'>
+            Précédent
+            </a>
+            {% else %}
+            <a class="pagination-previous is-disabled">Précédent</a>
             {% endif %}
-        {% else  %}
-            <p>Pas de données</p>
-        {% endif %}
-        <div id="modalplayerdata"></div>
-    </div>
-</div>
+            
+            {% if players.has_next %}
+            <a class="pagination-next"
+                hx-get="/searchplayers/" 
+                hx-target="#search"
+                hx-include="[name='first_name'],[name='last_name'],[name='name'],[name='gender']"
+                hx-vals='{"page": {{ players.number|add:"1" }}}'>
+                Suivant
+            </a>
+            {% else %}
+            <a class="pagination-next is-disabled">Suivant</a>
+            {% endif %}
+
+            <ul class="pagination-list"></ul>
+            {% for i in page_range|default_if_none:players.paginator.get_elided_page_range %}
+                {% if players.number == i %}
+                    <a class="pagination-link is-current"
+                        hx-get="/searchplayers/" 
+                        hx-target="#search"
+                        hx-include="[name='first_name'],[name='last_name'],[name='name'],[name='gender']"
+                        hx-vals='{"page": {{ i }}}'>
+                        {{ i }}
+                    </a>
+                {% else %}
+                    {% if i == players.paginator.ELLIPSIS %}
+                        <a class="pagination-link">{{ i }}</a>
+                    {% else %}
+                        <a class="pagination-link" 
+                            hx-get="/searchplayers/" 
+                            hx-target="#search"
+                            hx-include="[name='first_name'],[name='last_name'],[name='name'],[name='gender']"
+                            hx-vals='{"page": {{ i }}}'>
+                            {{ i }}
+                        </a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </nav>
+    {% endif %}
+{% else  %}
+    <p>Pas de données</p>
+{% endif %}

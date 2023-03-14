@@ -1,4 +1,4 @@
-<h2 class="subtitle">Ce club a participé aux {{ nbresults }} compétitions suivantes :</h2>
+<p>Ce club a participé aux {{ nbresults }} compétitions suivantes :</p>
 {% if clubpools %}
     <table class="table is-fullwidth is-hoverable is-size-7-mobile">
         <thead>
@@ -23,7 +23,7 @@
             {% if clubpools.has_previous %}
             <a class="pagination-previous"
                 hx-get="/clubdatapools/" 
-                hx-target="#clubdatapools"
+                hx-target="#tabcontents"
                 hx-vals='{"page": {{ clubpools.number|add:"-1" }} }'>
                 Précédent
             </a>
@@ -34,7 +34,7 @@
             {% if clubpools.has_next %}
             <a class="pagination-next"
                 hx-get="/clubdatapools/" 
-                hx-target="#clubdatapools"
+                hx-target="#tabcontents"
                 hx-vals='{"page": {{ clubpools.number|add:"1" }} }'>
                 Suivant
             </a>
@@ -47,7 +47,7 @@
                 {% if clubpools.number == i %}
                     <a class="pagination-link is-current"
                         hx-get="/clubdatapools/" 
-                        hx-target="#clubdatapools"
+                        hx-target="#tabcontents"
                         hx-vals='{"page": {{ i }} }'>
                         {{ i }}
                     </a>
@@ -57,7 +57,7 @@
                     {% else %}
                         <a class="pagination-link" 
                             hx-get="/clubdatapools/" 
-                            hx-target="#clubdatapools"
+                            hx-target="#tabcontents"
                             hx-vals='{"page": {{ i }} }'>
                             {{ i }}
                         </a>
@@ -68,5 +68,5 @@
         </nav>
     {% endif %}
 {% else %}
-    Pas de données!
+<p>Pas de données!</p>
 {% endif %}

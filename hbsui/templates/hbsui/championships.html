@@ -1,10 +1,10 @@
 <div class="field">
     <div class="control">
         <div class="select is-fullwidth is-size-7-mobile">
-            <select hx-get="/competitions"
+            <select hx-get="/competitions/"
                 name="championshipid"
                 hx-target="#competitions"
-                _="on change show #competitions then hide #pools then hide #poolsdata">
+                _="on change show #competitions then hide #pools">
             <option selected value=''> -- Choisissez un championnat -- </option>
             {% for championship in championships %}
             <option value={{ championship.id }}>{{ championship.code }} - {{ championship.name }}</option>

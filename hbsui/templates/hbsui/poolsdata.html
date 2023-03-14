@@ -1,14 +1,12 @@
-<div class="columns">
-    <div class="column is-8 is-offset-2 is-full-mobile">
-        <nav class="tabs is-boxed is-centered is-size-7-mobile" hx-target="#tab-contents" _="on htmx:afterOnLoad take .is-active for event.target">
-            <div class="container">
-                <ul>
-                    <li class="tab is-active" hx-get="/poolevents" hx-include="[name='poolid']"><a >Evènements</a></li>
-                    <li class="tab" hx-get="/poolteams" hx-include="[name='poolid']"><a >Classement</a></li>
-                    <li class="tab" hx-get="/poolplayers" hx-include="[name='poolid']"><a >Joueurs</a></li>
-                </ul>
-            </div>
-        </nav>
+<p class="title is-5">{{ pool.competition.championship.name }}</p>
+<p class="subtitle is-6">{{ pool.phase_name }}<br>{{ pool.name }}</p>
+<nav class="tabs is-boxed is-centered is-size-7-mobile" hx-target="#tabcontents" _="on htmx:afterOnLoad take .is-active for event.target">
+    <div class="container">
+        <ul>
+            <li class="tab is-active" hx-get="/poolevents/" hx-vals='{"poolid": {{ pool.id }}}'><a >Evènements</a></li>
+            <li class="tab" hx-get="/poolteams/" hx-vals='{"poolid": {{ pool.id }}}'><a >Classement</a></li>
+            <li class="tab" hx-get="/poolplayers/" hx-vals='{"poolid": {{ pool.id }}}'><a >Joueurs</a></li>
+        </ul>
     </div>
-</div>
-<div id="tab-contents" hx-get="/poolevents" hx-trigger="load" hx-include="[name='poolid']"></div>
+</nav>
+<div id="tabcontents" hx-get="/poolevents/" hx-trigger="load" hx-vals='{"poolid": {{ pool.id }}}'></div>

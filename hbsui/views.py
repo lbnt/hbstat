@@ -68,13 +68,15 @@ def pools(request):
         return HttpResponse('<div id="pools"></div>')
 
 def poolsdata(request):
-    return render(request, 'hbsui/poolsdata.html')
+    mypoolid = request.GET.get('poolid','')
+    mypool = DPool.objects.get(pk=mypoolid)
+    return render(request, 'hbsui/poolsdata.html', {'pool':mypool})
 
 def poolevents(request):
     mypoolid = request.GET.get('poolid','')
     mypool = DPool.objects.get(pk=mypoolid)
     poolevents = DPoolEvent.objects.filter(pool=mypoolid)
-    return render(request, 'hbsui/poolevents.html', {'poolid':mypoolid,'poolevents':poolevents,'pool_gender':mypool.get_gender_display(),'pool_age':mypool.get_age_display()})
+    return render(request, 'hbsui/poolevents.html', {'pool':mypool, 'poolevents':poolevents,'pool_gender':mypool.get_gender_display(),'pool_age':mypool.get_age_display()})
 
 def pooleventscsv(request):
     

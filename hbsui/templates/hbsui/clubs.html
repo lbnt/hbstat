@@ -1,45 +1,49 @@
-<div class="columns">
-    <div class="column is-8 is-offset-2 is-full-mobile is-size-7-mobile">
-        <p><strong>Recherche de clubs</strong></p>
-        <br>
-        <form>
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label is-size-7-mobile">Nom du club</label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <p class="control">
-                            <input class="input is-size-7-mobile" name="name" type="text">
-                        </p>
+<div id="modalclubs" class="modal is-active">
+	<div class="modal-background" _="on click toggle .is-active on #modalclubs"></div>
+    <div class="modal-content">
+        <div class="box">
+            <p class="title is-5">Recherche de clubs</p>
+            <br>
+            <form>
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label class="label is-size-7-mobile">Nom du club</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input is-size-7-mobile" name="name" type="text">
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label is-size-7-mobile">N° de département</label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <p class="control">
-                            <input class="input is-size-7-mobile" name="departement" type="text">
-                        </p>
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label class="label is-size-7-mobile">N° de département</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input is-size-7-mobile" name="departement" type="text">
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="field">
-                <div class="control">
-                    <button
-                        class="button is-primary is-size-7-mobile"
-                        hx-trigger="click"
-                        hx-get="/searchclubs/" 
-                        hx-target="#searchresults"
-                        hx-include="[name='name'],[name='departement']">
-                        Rechercher
-                    </button>
+                <div class="field">
+                    <div class="control">
+                        <button
+                            class="button is-primary is-size-7-mobile"
+                            hx-trigger="click"
+                            hx-get="/searchclubs/" 
+                            hx-target="#search"
+                            hx-include="[name='name'],[name='departement']"
+                            _="on click toggle .is-active on #modalclubs then show #search then hide #results">
+                            Rechercher
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+            <button class="modal-close is-large" aria-label="close" _="on click toggle .is-active on #modalclubs"></button>
+        </div>
     </div>
 </div>
-<div id="searchresults"></div>

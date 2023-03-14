@@ -1,70 +1,61 @@
-<div class="modal is-active">
-	<div class="modal-background"></div>
-	<div class="modal-content">
-		<div class="box">
-			<div class="content">
-				<p class="title is-5">{{ player.last_name }} {{ player.first_name|lower|capfirst }}</p>
-				<p class="subtitle is-5">{{ player.club.name }}</p>
-				<br>
-				<p class="title is-5">Statistiques totales</p>
-				<table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
-					<thead>
-						<tr>
-							<th>Nb matchs</th>
-							<th>But</th>
-							<th>Moy. But</th>
-							<th>Arrêt</th>
-							<th>Moy. Arrêt</th>
-							<th>2 mins</th>
-							<th>Carton J.</th>
-							<th>Carton R.</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>{{ player.games }}</td>
-							<td>{{ player.goals }}</td>
-							<td>{{ player.avg_goals|floatformat }}</td>
-							<td>{{ player.saves }}</td>
-							<td>{{ player.avg_saves|floatformat }}</td>
-							<td>{{ player.mins }}</td>
-							<td>{{ player.warn }}</td>
-							<td>{{ player.dis }}</td>
-						</tr>
-					</tbody>
-				</table>
-				<br>
-				<p class="title is-5">Statistiques par compétition/poule</p>
-				<table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
-					<thead>
-						<tr>
-							<th>Compétition</th>
-							<th>Poule</th>
-							<th>Nb matchs</th>
-							<th>But</th>
-							<th>Arrêt</th>
-							<th>Moy But</th>
-							<th>Moy Arrêt</th>
-						</tr>
-					</thead>
-					{% for playerpool in playerpools %}
-					<tbody>
-						<tr hx-get="/playerdatastat" hx-target="#playerdatastat" hx-trigger="click" hx-vals='{"poolid": {{ playerpool.pool.id }},"playerid": {{ player.id }}}'>
-							<td>{{ playerpool.pool.competition.name }}</td>
-							<td>{{ playerpool.pool.name }}</td>
-							<td>{{ playerpool.match_played }}</td>
-							<td>{{ playerpool.goal }}</td>
-							<td>{{ playerpool.saves }}</td>
-							<td>{{ playerpool.avg }}</td>
-							<td>{{ playerpool.avg_stop }}</td>
-						</tr>
-					</tbody>
-					{% endfor %}
-				</table>
-				<div id="playerdatastat"></div>
-				<button class="button is-size-7-mobile is-primary" hx-get="/emptymodal" hx-target="#modalplayerdata">Fermer</button>
-			</div>
-		</div>
-		<button class="modal-close" aria-label="close" hx-get="/emptymodal" hx-target="#modalplayerdata"></button>
-	</div>
+<div class="content">
+	<p class="title is-5">{{ player.last_name }} {{ player.first_name|lower|capfirst }}</p>
+	<p class="subtitle is-6">{{ player.club.name }}</p>
+	<br>
+	<p class="title is-5">Statistiques totales</p>
+	<table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
+		<thead>
+			<tr>
+				<th>Nb matchs</th>
+				<th>But</th>
+				<th>Moy. But</th>
+				<th>Arrêt</th>
+				<th>Moy. Arrêt</th>
+				<th>2 mins</th>
+				<th>Carton J.</th>
+				<th>Carton R.</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ player.games }}</td>
+				<td>{{ player.goals }}</td>
+				<td>{{ player.avg_goals|floatformat }}</td>
+				<td>{{ player.saves }}</td>
+				<td>{{ player.avg_saves|floatformat }}</td>
+				<td>{{ player.mins }}</td>
+				<td>{{ player.warn }}</td>
+				<td>{{ player.dis }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<p class="title is-5">Statistiques par compétition/poule</p>
+	<table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
+		<thead>
+			<tr>
+				<th>Compétition</th>
+				<th>Poule</th>
+				<th>Nb matchs</th>
+				<th>But</th>
+				<th>Arrêt</th>
+				<th>Moy But</th>
+				<th>Moy Arrêt</th>
+			</tr>
+		</thead>
+		{% for playerpool in playerpools %}
+		<tbody>
+			<tr hx-get="/playerdatastat/" hx-target="#playerdatastat" hx-trigger="click" hx-vals='{"poolid": {{ playerpool.pool.id }},"playerid": {{ player.id }}}'>
+				<td><a>{{ playerpool.pool.competition.name }}</a></td>
+				<td><a>{{ playerpool.pool.name }}</a></td>
+				<td><a>{{ playerpool.match_played }}</a></td>
+				<td><a>{{ playerpool.goal }}</a></td>
+				<td><a>{{ playerpool.saves }}</a></td>
+				<td><a>{{ playerpool.avg }}</a></td>
+				<td><a>{{ playerpool.avg_stop }}</a></td>
+			</tr>
+		</tbody>
+		{% endfor %}
+	</table>
+	<div id="playerdatastat"></div>
 </div>
