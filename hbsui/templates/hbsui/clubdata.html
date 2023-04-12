@@ -1,6 +1,40 @@
 <div>
-	<p class="title is-5">{{ club.name }}</p>
-	<br>
+	<p class="title is-5">
+		{{ club.name }}
+		<a _="			
+			on load
+			js(me)
+				let favoriteclubs = JSON.parse(localStorage.getItem('favoriteclubs')) || [];
+				let index = favoriteclubs.findIndex(el => el.id === '{{ club.id }}');
+				// myclub is not favoriteclubs
+				if (index == -1) {
+					return;
+				// myclub is already favoriteclubs
+				} else {
+					me.classList.add('favorite');
+				}
+			end
+			
+			on click
+			js(me)
+				const myclub = {id:'{{ club.id }}',name:'{{ club.name }}'};
+				let favoriteclubs = JSON.parse(localStorage.getItem('favoriteclubs')) || [];
+				let index = favoriteclubs.findIndex(el => el.id === '{{ club.id }}');
+				// myclub is not favoriteclubs, add it
+                if (index == -1) {
+                    favoriteclubs.push(myclub);
+                    me.classList.add('favorite');
+				}
+				// myclub is already favoriteclubs, remove it
+                else {
+                    favoriteclubs.splice(index, 1);
+                    me.classList.remove('favorite');
+                }
+				// store array in local storage
+                localStorage.setItem('favoriteclubs', JSON.stringify(favoriteclubs));
+			end">
+		&#9733</a>
+	</p>
 	<nav class="tabs is-boxed is-centered is-size-7-mobile" hx-target="#tabcontents" _="on htmx:afterOnLoad take .is-active for event.target">
 		<div class="container">
 			<ul>

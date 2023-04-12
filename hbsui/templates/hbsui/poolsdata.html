@@ -1,5 +1,44 @@
-<p class="title is-5">{{ pool.competition.championship.name }}</p>
-<p class="subtitle is-6">{{ pool.phase_name }}<br>{{ pool.name }}</p>
+<p class="title has-text-primary is-5">{{ pool.competition.championship.name }}</p>
+<p class="subtitle is-6">
+    {{ pool.competition.name }}
+    <br>
+    {{ pool.phase_name }}
+    <br>
+    {{ pool.name }}
+    <a _="
+			on load
+			js(me)
+				let favoritepools = JSON.parse(localStorage.getItem('favoritepools')) || [];
+				let index = favoritepools.findIndex(el => el.id === '{{ pool.id }}');
+				// mypool is not favoritepools
+				if (index == -1) {
+					return;
+				// mypool is already favoritepools
+				} else {
+					me.classList.add('favorite');
+				}
+			end
+			
+			on click
+			js(me)
+                const mypool = {id:'{{ pool.id }}',championship_name:'{{ pool.competition.championship.name }}',competition_name:'{{ pool.competition.name }}',phase_name:'{{ pool.phase_name }}',name:'{{ pool.name }}'};
+                let favoritepools = JSON.parse(localStorage.getItem('favoritepools')) || [];
+				let index = favoritepools.findIndex(el => el.id === '{{ pool.id }}');
+				// mypool is not favoritepools, add it
+				if (index == -1) {
+					favoritepools.push(mypool);
+					me.classList.add('favorite');
+				}
+				// mypool is already favoritepools, remove it
+				else {
+					favoritepools.splice(index, 1);
+					me.classList.remove('favorite');
+				}
+				// store array in local storage
+				localStorage.setItem('favoritepools', JSON.stringify(favoritepools));
+			end">
+		&#9733</a>
+</p>
 <nav class="tabs is-boxed is-centered is-size-7-mobile" hx-target="#tabcontents" _="on htmx:afterOnLoad take .is-active for event.target">
     <div class="container">
         <ul>

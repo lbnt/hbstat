@@ -1,0 +1,64 @@
+<div id="modalfavorites" class="modal is-active">
+	<div class="modal-background" _="on click toggle .is-active on #modalfavorites"></div>
+    <div class="modal-content">
+        <div class="box" id="favorites" style="padding: 10px;">
+            <h1 class="title has-text-primary is-4" _="on load
+                js
+                    return JSON.parse(localStorage.getItem('favoriteclubs')) || [];
+                end
+                for favoriteclub in it
+                    call document.createElement('li')
+                    put favoriteclub.name into its textContent
+                    set its.id to favoriteclub
+                    set its @hx-get to '/clubdata/'
+                    set its @hx-target to '#results'
+                    set its @hx-trigger to 'click'
+                    set its @hx-vals to `js:{id:${favoriteclub.id}}`
+                    set its @_ to 'on click toggle .is-active on #modalfavorites then hide #search then show #results'
+                    put it at the end of #favclubs
+                end
+                js
+                    return JSON.parse(localStorage.getItem('favoriteplayers')) || [];
+                end
+                for favoriteplayer in it
+                    call document.createElement('li')
+                    put favoriteplayer.last_name + ' ' + favoriteplayer.first_name+ ' - ' + favoriteplayer.club into its textContent
+                    set its.id to favoriteplayer
+                    set its @hx-get to '/playerdata/'
+                    set its @hx-target to '#results'
+                    set its @hx-trigger to 'click'
+                    set its @hx-vals to `js:{id:${favoriteplayer.id}}`
+                    set its @_ to 'on click toggle .is-active on #modalfavorites then hide #search then show #results'
+                    put it at the end of #favplayers
+                end
+                js
+                    return JSON.parse(localStorage.getItem('favoritepools')) || [];
+                end
+                for favoritepool in it
+                    call document.createElement('li')
+                    put favoritepool.championship_name + ' - ' + favoritepool.competition_name + ' - ' + favoritepool.phase_name + ' - ' + favoritepool.name into its textContent
+                    set its.id to favoritepool
+                    set its @hx-get to '/poolsdata/'
+                    set its @hx-target to '#results'
+                    set its @hx-trigger to 'click'
+                    set its @hx-vals to `js:{poolid:${favoritepool.id}}`
+                    set its @_ to 'on click toggle .is-active on #modalfavorites then hide #search then show #results'
+                    put it at the end of #favpools
+                end
+                js htmx.process(document.body)">Mes favoris</h1>
+            <div class="block">
+                <h2 class="subtitle has-text-info is-4">Clubs favoris</h2>
+                <ul id ="favclubs" class="pointer"></ul>
+            </div>
+            <div class="block">
+                <h2 class="subtitle has-text-info is-4">Joueurs favoris</h2>
+                <ul id ="favplayers" class="pointer"></ul>
+            </div>
+            <div class="block">
+                <h2 class="subtitle has-text-info is-4">Compétitions favorites</h2>
+                <ul id ="favpools" class="pointer"></ul>
+            </div>
+            <button class="modal-close" aria-label="close" _="on click toggle .is-active on #modalfavorites"></button>
+        </div>
+    </div>
+</div>

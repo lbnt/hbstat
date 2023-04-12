@@ -10,10 +10,10 @@
         </thead>
         {% for clubpool in clubpools %}
         <tbody>
-            <tr>
-                <td>{{ clubpool.dplayer__dpoolplayer__pool__competition__name }}</td>
-                <td>{{ clubpool.dplayer__dpoolplayer__pool__phase_name }}</td>
-                <td>{{ clubpool.dplayer__dpoolplayer__pool__name }}</td>
+            <tr hx-get="/poolsdata/" hx-target="#results" hx-trigger="click" hx-vals='{"poolid": {{ clubpool.dplayer__dpoolplayer__pool__id }}}' _="on click hide #search">
+                <td><a>{{ clubpool.dplayer__dpoolplayer__pool__competition__name }}</a></td>
+                <td><a>{{ clubpool.dplayer__dpoolplayer__pool__phase_name }}</a></td>
+                <td><a>{{ clubpool.dplayer__dpoolplayer__pool__name }}</a></td>
             </tr>
         </tbody>
         {% endfor %}

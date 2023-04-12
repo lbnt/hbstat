@@ -46,4 +46,5 @@ urlpatterns = [
     path('clubdataplayers/', views.clubdataplayers),
     path('clubdatapools/', views.clubdatapools),
     path('top/', views.top),
+    path('favorites/', views.favorites),
 ]

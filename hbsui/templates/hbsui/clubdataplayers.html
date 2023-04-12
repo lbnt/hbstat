@@ -10,10 +10,10 @@
         </thead>
         {% for player in players %}
         <tbody>
-            <tr>
-                <td>{{ player.last_name }}</td>
-                <td>{{ player.first_name|lower|capfirst }}</td>
-                <td>{{ player.gender }}</td>
+            <tr hx-get="/playerdata/" hx-target="#results" hx-trigger="click" hx-vals='{"id": {{ player.id }}}' _="on click show #results">
+                <td><a>{{ player.last_name }}</a></td>
+                <td><a>{{ player.first_name|lower|capfirst }}</a></td>
+                <td><a>{{ player.gender }}</a></td>
             </tr>
         </tbody>
         {% endfor %}

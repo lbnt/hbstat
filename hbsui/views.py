@@ -276,7 +276,7 @@ def clubdatapools(request):
     myclubid = request.GET.get('id','')
     page = request.GET.get('page',1)
     
-    myclubpools=DClub.objects.filter(id=myclubid).values('dplayer__dpoolplayer__pool__name', 'dplayer__dpoolplayer__pool__phase_name','dplayer__dpoolplayer__pool__competition__name').annotate(dcount=Count('dplayer__dpoolplayer__pool__id')).order_by('dplayer__dpoolplayer__pool__competition__name','dplayer__dpoolplayer__pool__phase_name')
+    myclubpools=DClub.objects.filter(id=myclubid).values('dplayer__dpoolplayer__pool__name', 'dplayer__dpoolplayer__pool__phase_name','dplayer__dpoolplayer__pool__competition__name','dplayer__dpoolplayer__pool__id').annotate(dcount=Count('dplayer__dpoolplayer__pool__id')).order_by('dplayer__dpoolplayer__pool__competition__name','dplayer__dpoolplayer__pool__phase_name')
 
     mynbresults=len(myclubpools)
 
@@ -289,3 +289,6 @@ def clubdatapools(request):
 def top(request):
     mytopgoalscorers = DPlayer.objects.order_by('-goals')[:10]
     return render(request, 'hbsui/top.html', {'topgoalscorers':mytopgoalscorers})
+
+def favorites(request):
+    return render(request, 'hbsui/favorites.html')

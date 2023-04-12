@@ -1,8 +1,43 @@
 <div class="content">
-	<p class="title is-5">{{ player.last_name }} {{ player.first_name|lower|capfirst }}</p>
+	<p class="title is-5">
+		{{ player.last_name }} {{ player.first_name|lower|capfirst }}
+		<a _="
+			on load
+			js(me)
+				let favoriteplayers = JSON.parse(localStorage.getItem('favoriteplayers')) || [];
+				let index = favoriteplayers.findIndex(el => el.id === '{{ player.id }}');
+				// myplayer is not favoriteplayers
+				if (index == -1) {
+					return;
+				// myplayer is already favoriteplayers
+				} else {
+					me.classList.add('favorite');
+				}
+			end
+			
+			on click
+			js(me)
+				const myplayer = {id:'{{ player.id }}',last_name:'{{ player.last_name }}',first_name:'{{ player.first_name|lower|capfirst }}',club:'{{ player.club.name }}'};
+				let favoriteplayers = JSON.parse(localStorage.getItem('favoriteplayers')) || [];
+				let index = favoriteplayers.findIndex(el => el.id === '{{ player.id }}');
+				// myplayer is not favoriteplayers, add it
+				if (index == -1) {
+					favoriteplayers.push(myplayer);
+					me.classList.add('favorite');
+				}
+				// myplayer is already favoriteplayers, remove it
+				else {
+					favoriteplayers.splice(index, 1);
+					me.classList.remove('favorite');
+				}
+				// store array in local storage
+				localStorage.setItem('favoriteplayers', JSON.stringify(favoriteplayers));
+			end">
+		&#9733</a>
+	</p>
 	<p class="subtitle is-6">{{ player.club.name }}</p>
 	<br>
-	<p class="title is-5">Statistiques totales</p>
+	<p class="title has-text-primary is-5">Statistiques totales</p>
 	<table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
 		<thead>
 			<tr>
@@ -30,11 +65,12 @@
 		</tbody>
 	</table>
 	<br>
-	<p class="title is-5">Statistiques par compétition/poule</p>
+	<p class="title has-text-primary is-5">Statistiques par compétition/phase/poule</p>
 	<table class="table is-narrow is-fullwidth is-hoverable is-size-7-mobile">
 		<thead>
 			<tr>
 				<th>Compétition</th>
+				<th>Phase</th>
 				<th>Poule</th>
 				<th>Nb matchs</th>
 				<th>But</th>
@@ -47,6 +83,7 @@
 		<tbody>
 			<tr hx-get="/playerdatastat/" hx-target="#playerdatastat" hx-trigger="click" hx-vals='{"poolid": {{ playerpool.pool.id }},"playerid": {{ player.id }}}'>
 				<td><a>{{ playerpool.pool.competition.name }}</a></td>
+				<td><a>{{ playerpool.pool.phase_name }}</a></td>
 				<td><a>{{ playerpool.pool.name }}</a></td>
 				<td><a>{{ playerpool.match_played }}</a></td>
 				<td><a>{{ playerpool.goal }}</a></td>
