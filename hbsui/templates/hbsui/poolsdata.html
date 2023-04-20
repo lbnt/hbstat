@@ -23,7 +23,7 @@
 			js(me)
 				const mychampionshipname = encodeURI(`{{ pool.competition.championship.name }}`);
 				const mycompetitionname = encodeURI(`{{ pool.competition.name }}`);
-				const myphasename = encodeURI(`{{ pool.phase.name }}`);
+				const myphasename = encodeURI(`{{ pool.phase_name }}`);
 				const mypoolname = encodeURI(`{{ pool.name }}`);
 				const mypool = {id:'{{ pool.id }}',championship_name:mychampionshipname,competition_name:mycompetitionname,phase_name:myphasename,name:mypoolname};
                 let favoritepools = JSON.parse(localStorage.getItem('favoritepools')) || [];
