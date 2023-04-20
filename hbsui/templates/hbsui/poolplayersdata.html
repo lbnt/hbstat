@@ -13,14 +13,14 @@
         </thead>
         {% for poolplayer in poolplayers %}
         <tbody>
-            <tr>
-                <td>{{ poolplayer.player.club.name }}</td>
-                <td>{{ poolplayer.player.last_name }} {{ poolplayer.player.first_name|lower|capfirst }}</td>
-                <td>{{ poolplayer.match_played }}</td>
-                <td>{{ poolplayer.goal }}</td>
-                <td>{{ poolplayer.saves }}</td>
-                <td>{{ poolplayer.avg }}</td>
-                <td>{{ poolplayer.avg_stop }}</td>
+            <tr hx-get="/playerdata/" hx-target="#results" hx-trigger="click" hx-vals='{"id": {{ poolplayer.player.id }}}' _="on click show #results">
+                <td><a>{{ poolplayer.player.club.name }}</a></td>
+                <td><a>{{ poolplayer.player.last_name }} {{ poolplayer.player.first_name|lower|capfirst }}</a></td>
+                <td><a>{{ poolplayer.match_played }}</a></td>
+                <td><a>{{ poolplayer.goal }}</a></td>
+                <td><a>{{ poolplayer.saves }}</a></td>
+                <td><a>{{ poolplayer.avg }}</a></td>
+                <td><a>{{ poolplayer.avg_stop }}</a></td>
             </tr>
         </tbody>
         {% endfor %}
