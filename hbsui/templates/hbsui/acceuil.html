@@ -10,11 +10,11 @@
         <script src="https://unpkg.com/htmx.org@1.8.6" integrity="sha384-Bj8qm/6B+71E6FQSySofJOUjA/gq330vEqjFx9LakWybUySyI1IQHwPtbTU7bNwx" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/hyperscript.org@0.9.8"></script>
         <style type="text/css">
+            body {
+                scroll-behavior: smooth;
+            }
             .pointer {
                 cursor: pointer;
-            }
-            .favorite {
-                color: rgb(255, 203, 0);
             }
         </style>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -26,7 +26,7 @@
         <div class="container">
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
-                    <a class="navbar-item" href="">
+                    <a class="navbar-item" href="/">
                         <img src="{% static 'hbsui/logo.png' %}" width="112" height="28">
                     </a>
                 
@@ -61,8 +61,9 @@
             <div class="columns">
                 <div class="column is-8 is-offset-2 is-full-mobile">
                     <div id="modal"></div>
+                    <div class="box" id="welcome" style="padding: 10px;" hx-get="/welcome/" hx-trigger="load"></div>
                     <div class="box" id="search" style="display: none; padding: 10px;"></div>
-                    <div class="box" id="results" style="padding: 10px;" hx-get="/welcome/" hx-trigger="load"></div>
+                    <div class="box" id="results" style="display: none; padding: 10px;">{% block results %}{% endblock %}</div>
                 </div>
             </div>
         </main>

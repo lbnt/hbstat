@@ -1,4 +1,8 @@
-<div class="content">
+{% extends base_template %}
+
+{% block results %}
+
+<div class="content" _="on load show #results then hide #welcome">
 	<p class="title is-5">
 		{{ player.last_name }} {{ player.first_name|lower|capfirst }}
 		<a _="
@@ -99,3 +103,5 @@
 	</table>
 	<div id="playerdatastat"></div>
 </div>
+
+{% endblock %}

@@ -9,7 +9,7 @@
     </thead>
     {% for club in clubs %}
     <tbody>
-        <tr hx-get="/clubdata/" hx-target="#results" hx-trigger="click" hx-vals='{"id": {{ club.id }}}' _="on click show #results">
+        <tr hx-get="/clubdata/" hx-target="#results" hx-trigger="click" hx-vals='{"id": {{ club.id }}}' hx-push-url="true" _="on click show #results">
             <td><a>{{ club.name }}</a></td>
             <td><a>{{ club.departement }}</a></td>
         </tr>

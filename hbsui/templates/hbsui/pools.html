@@ -5,7 +5,8 @@
                 hx-get="/poolsdata/"
                 name="poolid"
                 hx-target="#results"
-                _="on change toggle .is-active on #modalcategories then hide #search">
+                hx-push-url="true"
+                _="on change toggle .is-active on #modalcategories then hide #welcome then hide #search then show #results">
             <option selected> -- Choisissez une poule -- </option>
             {% for pool in pools %}
                 <option value={{ pool.id }}>{{ pool.phase_name }} - {{ pool.name }}</option>

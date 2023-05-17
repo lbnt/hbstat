@@ -15,7 +15,8 @@
                     set its @hx-target to '#results'
                     set its @hx-trigger to 'click'
                     set its @hx-vals to `js:{poolid:${favoritepool.id}}`
-                    set its @_ to 'on click toggle .is-active on #modalfavorites then hide #search then show #results'
+                    set its @hx-push-url to 'true'
+                    set its @_ to 'on click toggle .is-active on #modalfavorites then hide #search then show #results then hide #welcome'
                     put it at the end of #favpools
                 end
                 js
@@ -30,7 +31,8 @@
                     set its @hx-target to '#results'
                     set its @hx-trigger to 'click'
                     set its @hx-vals to `js:{id:${favoriteclub.id}}`
-                    set its @_ to 'on click toggle .is-active on #modalfavorites then hide #search then show #results'
+                    set its @hx-push-url to 'true'
+                    set its @_ to 'on click toggle .is-active on #modalfavorites then hide #search then show #results then hide #welcome'
                     put it at the end of #favclubs
                 end
                 js
@@ -45,7 +47,8 @@
                     set its @hx-target to '#results'
                     set its @hx-trigger to 'click'
                     set its @hx-vals to `js:{id:${favoriteplayer.id}}`
-                    set its @_ to 'on click toggle .is-active on #modalfavorites then hide #search then show #results'
+                    set its @hx-push-url to 'true'
+                    set its @_ to 'on click toggle .is-active on #modalfavorites then hide #search then show #results then hide #welcome'
                     put it at the end of #favplayers
                 end
                 js htmx.process(document.body)">Mes favoris</h1>

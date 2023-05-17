@@ -13,7 +13,7 @@
         </thead>
         {% for poolplayer in poolplayers %}
         <tbody>
-            <tr hx-get="/playerdata/" hx-target="#results" hx-trigger="click" hx-vals='{"id": {{ poolplayer.player.id }}}' _="on click show #results">
+            <tr hx-get="/playerdata/" hx-target="#results" hx-trigger="click" hx-vals='{"id": {{ poolplayer.player.id }}}' hx-push-url='/playerdata/?id={{ poolplayer.player.id }}' _="on click show #results">
                 <td><a>{{ poolplayer.player.club.name }}</a></td>
                 <td><a>{{ poolplayer.player.last_name }} {{ poolplayer.player.first_name|lower|capfirst }}</a></td>
                 <td><a>{{ poolplayer.match_played }}</a></td>

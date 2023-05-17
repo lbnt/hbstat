@@ -10,7 +10,7 @@
         </thead>
         {% for clubpool in clubpools %}
         <tbody>
-            <tr hx-get="/poolsdata/" hx-target="#results" hx-trigger="click" hx-vals='{"poolid": {{ clubpool.dplayer__dpoolplayer__pool__id }}}' _="on click hide #search">
+            <tr hx-get="/poolsdata/" hx-target="#results" hx-trigger="click" hx-vals='{"poolid": {{ clubpool.dplayer__dpoolplayer__pool__id }}}' hx-push-url='/poolsdata/?id={{ clubpool.dplayer__dpoolplayer__pool__id }}' _="on click hide #search">
                 <td><a>{{ clubpool.dplayer__dpoolplayer__pool__competition__name }}</a></td>
                 <td><a>{{ clubpool.dplayer__dpoolplayer__pool__phase_name }}</a></td>
                 <td><a>{{ clubpool.dplayer__dpoolplayer__pool__name }}</a></td>

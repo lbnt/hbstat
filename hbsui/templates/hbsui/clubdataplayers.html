@@ -10,7 +10,7 @@
         </thead>
         {% for player in players %}
         <tbody>
-            <tr hx-get="/playerdata/" hx-target="#results" hx-trigger="click" hx-vals='{"id": {{ player.id }}}' _="on click show #results">
+            <tr hx-get="/playerdata/" hx-target="#results" hx-trigger="click" hx-vals='{"id": {{ player.id }}}' hx-push-url='/playerdata/?id={{ player.id }}' _="on click show #results">
                 <td><a>{{ player.last_name }}</a></td>
                 <td><a>{{ player.first_name|lower|capfirst }}</a></td>
                 <td><a>{{ player.gender }}</a></td>

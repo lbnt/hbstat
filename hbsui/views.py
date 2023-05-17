@@ -70,7 +70,20 @@ def pools(request):
 def poolsdata(request):
     mypoolid = request.GET.get('poolid','')
     mypool = DPool.objects.get(pk=mypoolid)
-    return render(request, 'hbsui/poolsdata.html', {'pool':mypool})
+
+    if request.htmx:
+        base_template = "hbsui/acceuil_results_partial.html"
+    else:
+        base_template = "hbsui/acceuil.html"
+
+    return render(
+        request,
+        'hbsui/poolsdata.html',
+        {
+            "base_template": base_template,
+            'pool':mypool
+        }
+    )
 
 def poolevents(request):
     mypoolid = request.GET.get('poolid','')
@@ -216,7 +229,21 @@ def playerdata(request):
     
     myplayer=DPlayer.objects.get(id=myplayerid)
     myplayerpools=DPoolPlayer.objects.filter(player=myplayerid)
-    return render(request, 'hbsui/playerdata.html', {'player':myplayer,'playerpools':myplayerpools})
+ 
+    if request.htmx:
+        base_template = "hbsui/acceuil_results_partial.html"
+    else:
+        base_template = "hbsui/acceuil.html"
+
+    return render(
+        request,
+        'hbsui/playerdata.html',
+        {
+            "base_template": base_template,
+            'player':myplayer,
+            'playerpools':myplayerpools
+        }
+    )
 
 def playerdatastat(request):
     mypoolid = request.GET.get('poolid','')
@@ -254,8 +281,20 @@ def clubdata(request):
     myclubid = request.GET.get('id','')
     
     myclub=DClub.objects.get(id=myclubid)
-    
-    return render(request, 'hbsui/clubdata.html', {'club':myclub})
+
+    if request.htmx:
+        base_template = "hbsui/acceuil_results_partial.html"
+    else:
+        base_template = "hbsui/acceuil.html"
+
+    return render(
+        request,
+        'hbsui/clubdata.html',
+        {
+            "base_template": base_template,
+            'club':myclub
+        }
+    )
 
 def clubdataplayers(request):
     myclubid = request.GET.get('id','')
