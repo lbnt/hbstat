@@ -90,42 +90,6 @@ def update_player_stats(player_obj):
         avg_saves = myplayerstats['saves__avg']
     )
 
-def update_club_name(clubid):
-
-    myclub = Club.objects.get(pk=clubid)
-
-    #get all teams name of this club
-    mypoolteams = PoolTeam.objects.filter(club=clubid)
-
-    team_names = []
-    for mypoolteam in mypoolteams:
-        team_names.append(mypoolteam.name)
-
-    names_occurence = Counter(team_names)
-
-    names = names_occurence.most_common(2)
-
-    if len(names) == 1:
-        myclub.name = names[0][0]
-        myclub.save()
-    elif len(names) == 2:
-        # initialize SequenceMatcher object with input string
-        seqMatch = SequenceMatcher(None,names[0][0],names[1][0])
-    
-        # find match of longest sub-string
-        match = seqMatch.find_longest_match(0, len(names[0][0]), 0, len(names[1][0]))
-
-        if match.size != 0 :
-            myclub.name = names[0][0][match.a: match.a + match.size]
-            myclub.save()
-        else:
-            #bad news
-            return
-    else:
-        #should not happen
-        return
-        
-    
 
 
 
@@ -1066,17 +1030,15 @@ def scrap( season, category):
 
 class Command(BaseCommand):
     args = ''
-    help = 'Update -Championnats départementaux- database'
+    help = 'Update database'
 
     def handle(self, *args, **options):
 
         # scrap championnats departementaux
-        #scrap( '18', 'departemental')
-        # scrap championnats regionaux
-        #scrap( 18, 'regional')
-        #national
         scrap( '19', 'departemental')
+        # scrap championnats regionaux
         scrap( '19', 'regional')
-        #update_club_name(1056)
+        #national
+        #TODO
         
     
