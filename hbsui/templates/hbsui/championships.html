@@ -4,10 +4,10 @@
             <select hx-get="/competitions/"
                 name="championshipid"
                 hx-target="#competitions"
-                _="on change show #competitions then hide #pools">
+                _="on change show #competitions then hide #phases then hide #pools">
             <option selected value=''> -- Choisissez un championnat -- </option>
             {% for championship in championships %}
-            <option value={{ championship.id }}>{{ championship.code }} - {{ championship.name }}</option>
+            <option value={{ championship.id }}>{{ championship.departement }} - {{ championship.name }}</option>
             {% endfor %}
             </select>
         </div>

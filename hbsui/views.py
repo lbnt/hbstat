@@ -12,27 +12,28 @@ from django.db.models import Sum
 from django.db.models import Count
 from django.db.models import Avg
 
-from hbsui.models import DChampionship, DClub
-from hbsui.models import DCompetition
-from hbsui.models import DPool
-from hbsui.models import DPoolTeam
-from hbsui.models import DPoolEvent
-from hbsui.models import DPoolDate
-from hbsui.models import DPoolPlayer
-from hbsui.models import DPoolPlayerStat
-from hbsui.models import DPlayer
+from hbsui.models import Championship, Club
+from hbsui.models import Competition
+from hbsui.models import Phase
+from hbsui.models import Pool
+from hbsui.models import PoolTeam
+from hbsui.models import PoolMatch
+from hbsui.models import PoolDay
+from hbsui.models import Player
+from hbsui.models import PlayerPoolStat
+from hbsui.models import Player
 
 # Create your views here.
 def welcome(request):
-    mynbplayers=DPlayer.objects.count()
-    mynbpoolteams=DPoolTeam.objects.count()
-    mynbclubs=DClub.objects.count()
-    mynbpooleventspast=DPoolEvent.objects.exclude(date_date__gte = datetime.datetime.now()).count()
-    mynbpooleventsfuture=DPoolEvent.objects.filter(date_date__gte = datetime.datetime.now()).count()
-    mynbpools=DPool.objects.count()
-    mynbgoals=DPoolTeam.objects.aggregate(Sum('scored'))
+    mynbplayers=Player.objects.count()
+    mynbpoolteams=PoolTeam.objects.count()
+    mynbclubs=Club.objects.count()
+    mynbpoolmatchspast=PoolMatch.objects.exclude(date__gte = datetime.datetime.now()).count()
+    mynbpoolmatchsfuture=PoolMatch.objects.filter(date__gte = datetime.datetime.now()).count()
+    mynbpools=Pool.objects.count()
+    mynbgoals=PoolTeam.objects.aggregate(Sum('scored'))
     
-    return render(request, 'hbsui/welcome.html', {'nbplayers': mynbplayers, 'nbpoolteams': mynbpoolteams, 'nbgoals' : mynbgoals, 'nbclubs': mynbclubs, 'nbpooleventspast': mynbpooleventspast,'nbpooleventsfuture': mynbpooleventsfuture, 'nbpools': mynbpools} )
+    return render(request, 'hbsui/welcome.html', {'nbplayers': mynbplayers, 'nbpoolteams': mynbpoolteams, 'nbgoals' : mynbgoals, 'nbclubs': mynbclubs, 'nbpoolmatchspast': mynbpoolmatchspast,'nbpoolmatchsfuture': mynbpoolmatchsfuture, 'nbpools': mynbpools} )
 
 def acceuil(request):
     return render(request, 'hbsui/acceuil.html')
@@ -46,7 +47,7 @@ def categories(request):
 def championships(request):
     mycategory = request.GET.get('categoryid','')
     if mycategory != '':
-        mychampionships = DChampionship.objects.filter(category=mycategory).order_by('code')
+        mychampionships = Championship.objects.filter(category=mycategory).order_by('departement')
         return render(request, 'hbsui/championships.html', {'championships': mychampionships})
     else:
         return HttpResponse('<div id="championships"></div>')
@@ -54,22 +55,30 @@ def championships(request):
 def competitions(request):
     mychampionshipid = request.GET.get('championshipid','')
     if mychampionshipid != '':
-        mycompetitions = DCompetition.objects.filter(championship=mychampionshipid)
+        mycompetitions = Competition.objects.filter(championship=mychampionshipid)
         return render(request, 'hbsui/competitions.html', {'competitions': mycompetitions})
     else:
         return HttpResponse('<div id="competitions"></div>')
 
-def pools(request):
+def phases(request):
     mycompetitionid = request.GET.get('competitionid','')
     if mycompetitionid != '':
-        mypools = DPool.objects.filter(competition=mycompetitionid)
+        myphases = Phase.objects.filter(competition=mycompetitionid)
+        return render(request, 'hbsui/phases.html', {'phases': myphases})
+    else:
+        return HttpResponse('<div id="phases"></div>')
+
+def pools(request):
+    myphaseid = request.GET.get('phaseid','')
+    if myphaseid != '':
+        mypools = Pool.objects.filter(phase=myphaseid)
         return render(request, 'hbsui/pools.html', {'pools': mypools})
     else:
         return HttpResponse('<div id="pools"></div>')
 
 def poolsdata(request):
     mypoolid = request.GET.get('poolid','')
-    mypool = DPool.objects.get(pk=mypoolid)
+    mypool = Pool.objects.get(pk=mypoolid)
 
     if request.htmx:
         base_template = "hbsui/acceuil_results_partial.html"
@@ -85,19 +94,19 @@ def poolsdata(request):
         }
     )
 
-def poolevents(request):
+def poolmatchs(request):
     mypoolid = request.GET.get('poolid','')
-    mypool = DPool.objects.get(pk=mypoolid)
-    poolevents = DPoolEvent.objects.filter(pool=mypoolid)
-    return render(request, 'hbsui/poolevents.html', {'pool':mypool, 'poolevents':poolevents,'pool_gender':mypool.get_gender_display(),'pool_age':mypool.get_age_display()})
+    mypool = Pool.objects.get(pk=mypoolid)
+    poolmatchs = PoolMatch.objects.filter(pool=mypoolid)
+    return render(request, 'hbsui/poolmatchs.html', {'pool':mypool, 'poolmatchs':poolmatchs,'pool_gender':mypool.phase.competition.get_gender_display(),'pool_age':mypool.phase.competition.get_age_display()})
 
-def pooleventscsv(request):
+def poolmatchscsv(request):
     
     mypoolid = request.GET.get('poolid','')
-    mypool = DPool.objects.get(pk=mypoolid)
-    poolevents = DPoolEvent.objects.filter(pool=mypoolid)
+    mypool = Pool.objects.get(pk=mypoolid)
+    poolmatchs = PoolMatch.objects.filter(pool=mypoolid)
 
-    csvfilename = mypool.competition.championship.code + "_" + mypool.competition.name + "_" + mypool.phase_name + "_" + mypool.name + "_resultats.csv";
+    csvfilename = mypool.phase.competition.championship.code + "_" + mypool.phase.competition.name + "_" + mypool.phase.name + "_" + mypool.name + "_resultats.csv";
 
     response = HttpResponse(
         content_type='text/csv',
@@ -106,26 +115,26 @@ def pooleventscsv(request):
 
     writer = csv.writer(response)
     
-    if poolevents:
+    if poolmatchs:
         writer.writerow(["journée", "date", "heures", "minutes", "équipe_0", "score_0", "équipe_1", "score_1", "lieu_0", "lieu_1", "lieu_2", "arbitre_0", "arbitre_1", "feuille_de_match"])
 
-        for poolevent in poolevents:
-            writer.writerow([poolevent.date_day, poolevent.date_date, poolevent.date_hour, poolevent.date_minute, poolevent.team_0_name, poolevent.team_0_score, poolevent.team_1_name, poolevent.team_1_score, poolevent.location_0, poolevent.location_1, poolevent.location_2, poolevent.referee_0_name, poolevent.referee_1_name, poolevent.fdm])
+        for poolmatch in poolmatchs:
+            writer.writerow([poolmatch.date_day, poolmatch.date_date, poolmatch.date_hour, poolmatch.date_minute, poolmatch.team_0_name, poolmatch.team_0_score, poolmatch.team_1_name, poolmatch.team_1_score, poolmatch.location_0, poolmatch.location_1, poolmatch.location_2, poolmatch.referee_0_name, poolmatch.referee_1_name, poolmatch.fdm])
 
     return response
 
 def poolteams(request):
     mypoolid = request.GET.get('poolid','')
-    poolteams = DPoolTeam.objects.filter(pool=mypoolid).order_by('position')
+    poolteams = PoolTeam.objects.filter(pool=mypoolid).order_by('ranking')
     return render(request, 'hbsui/poolteams.html', {'poolid':mypoolid,'poolteams': poolteams})
 
 def poolteamscsv(request):
     
     mypoolid = request.GET.get('poolid','')
-    mypool = DPool.objects.get(pk=mypoolid)
-    poolteams = DPoolTeam.objects.filter(pool=mypoolid).order_by('position')
+    mypool = Pool.objects.get(pk=mypoolid)
+    poolteams = PoolTeam.objects.filter(pool=mypoolid).order_by('ranking')
     
-    csvfilename = mypool.competition.championship.code + "_" + mypool.competition.name + "_" + mypool.phase_name + "_" + mypool.name + "_classement.csv";
+    csvfilename = mypool.phase.competition.championship.code + "_" + mypool.phase.competition.name + "_" + mypool.phase.name + "_" + mypool.name + "_classement.csv";
 
     response = HttpResponse(
         content_type='text/csv',
@@ -138,25 +147,25 @@ def poolteamscsv(request):
         writer.writerow(["classement", "équipe", "nb_matchs_joués", "points", "victoires", "nuls", "défaites", "buts+", "buts-", "diff"])
 
         for poolteam in poolteams:
-            writer.writerow([poolteam.position, poolteam.team_name, poolteam.games, poolteam.points, poolteam.wins, poolteam.draws, poolteam.defeats, poolteam.scored, poolteam.missed, poolteam.difference])
+            writer.writerow([poolteam.ranking, poolteam.name, poolteam.games, poolteam.points, poolteam.wins, poolteam.draws, poolteam.defeats, poolteam.scored, poolteam.missed, poolteam.difference])
 
     return response
 
 def poolplayers(request):
     mypoolid = request.GET.get('poolid','')
-    mypoolclubs=DPoolPlayer.objects.filter(pool=mypoolid).values('player__club__name','player__club__id').annotate(Sum('goal'))
+    mypoolclubs=PlayerPoolStat.objects.filter(pool=mypoolid).values('player__club__name','player__club__id').annotate(Sum('goals'))
     return render(request, 'hbsui/poolplayers.html', {'poolid':mypoolid, 'poolclubs':mypoolclubs})
 
 def poolplayersdata(request):
     mypoolid = request.GET.get('poolid','')
     myclubid = request.GET.get('clubid','')
-    myorderby = request.GET.get('orderby','-goal')
+    myorderby = request.GET.get('orderby','-goals')
     page = request.GET.get('page',1)
     try:
         if myclubid == 'all':
-            mypoolplayers=DPoolPlayer.objects.filter(pool=mypoolid).order_by(myorderby)
+            mypoolplayers=PlayerPoolStat.objects.filter(pool=mypoolid).order_by(myorderby)
         else:
-            mypoolplayers=DPoolPlayer.objects.filter(player__club__id=myclubid,pool=mypoolid).order_by(myorderby)
+            mypoolplayers=PlayerPoolStat.objects.filter(player__club__id=myclubid,pool=mypoolid).order_by(myorderby)
     except:
         mypoolplayers = None
 
@@ -170,11 +179,11 @@ def poolplayersdata(request):
 def poolplayersdatacsv(request):
     mypoolid = request.GET.get('poolid','')
     
-    mypool = DPool.objects.get(pk=mypoolid)
+    mypool = Pool.objects.get(pk=mypoolid)
     
-    mypoolplayers=DPoolPlayer.objects.filter(pool=mypoolid)
+    mypoolplayers=PlayerPoolStat.objects.filter(pool=mypoolid)
     
-    csvfilename = mypool.competition.championship.code + "_" + mypool.competition.name + "_" + mypool.phase_name + "_" + mypool.name + "_joueurs.csv";
+    csvfilename = mypool.phase.competition.championship.code + "_" + mypool.phase.competition.name + "_" + mypool.phase.name + "_" + mypool.name + "_joueurs.csv";
 
     response = HttpResponse(
         content_type='text/csv',
@@ -187,7 +196,7 @@ def poolplayersdatacsv(request):
         writer.writerow(["club", "nom", "prénom", "nb_matchs_joués", "buts", "arrêts", "moyenne_buts", "moyenne_arrêts"])
 
         for mypoolplayer in mypoolplayers:
-            writer.writerow([mypoolplayer.player.club.name, mypoolplayer.player.last_name, mypoolplayer.player.first_name, mypoolplayer.match_played, mypoolplayer.goal, mypoolplayer.saves, mypoolplayer.avg, mypoolplayer.avg_stop])
+            writer.writerow([mypoolplayer.player.club.name, mypoolplayer.player.last_name, mypoolplayer.player.first_name, mypoolplayer.match_played, mypoolplayer.goals, mypoolplayer.saves, mypoolplayer.avg_goals, mypoolplayer.avg_saves])
 
     return response
 
@@ -215,7 +224,7 @@ def searchplayers(request):
     if mygender == 'M' or mygender == 'F' :
         filterdict['gender'] = mygender
     
-    myplayers=DPlayer.objects.filter(**filterdict)
+    myplayers=Player.objects.filter(**filterdict)
     mynbresults=len(myplayers)
     paginator = Paginator(myplayers, 10)
     players = paginator.page(page)
@@ -227,8 +236,8 @@ def searchplayers(request):
 def playerdata(request):
     myplayerid = request.GET.get('id','')
     
-    myplayer=DPlayer.objects.get(id=myplayerid)
-    myplayerpools=DPoolPlayer.objects.filter(player=myplayerid)
+    myplayer=Player.objects.get(id=myplayerid)
+    myplayerpools=PlayerPoolStat.objects.filter(player=myplayerid)
  
     if request.htmx:
         base_template = "hbsui/acceuil_results_partial.html"
@@ -249,8 +258,8 @@ def playerdatastat(request):
     mypoolid = request.GET.get('poolid','')
     myplayerid = request.GET.get('playerid','')
     
-    mypool = DPool.objects.get(id=mypoolid)
-    myplayerpoolstats=DPoolPlayerStat.objects.filter(player=myplayerid,pool=mypoolid)  
+    mypool = Pool.objects.get(id=mypoolid)
+    myplayerpoolstats=PlayerPoolStat.objects.filter(player=myplayerid,pool=mypoolid)  
     return render(request, 'hbsui/playerdatastat.html', {'pool':mypool,'playerpoolstats':myplayerpoolstats})
 
 def emptymodal(request):
@@ -269,7 +278,7 @@ def searchclubs(request):
     if len(mydepartement) >= 1:
         filterdict['departement__exact'] = mydepartement
     
-    myclubs=DClub.objects.filter(**filterdict).order_by('name')
+    myclubs=Club.objects.filter(**filterdict).order_by('name')
     nb_clubs=len(myclubs)
     paginator = Paginator(myclubs, 10)
     clubs = paginator.page(page)
@@ -280,7 +289,7 @@ def searchclubs(request):
 def clubdata(request):
     myclubid = request.GET.get('id','')
     
-    myclub=DClub.objects.get(id=myclubid)
+    myclub=Club.objects.get(id=myclubid)
 
     if request.htmx:
         base_template = "hbsui/acceuil_results_partial.html"
@@ -300,8 +309,8 @@ def clubdataplayers(request):
     myclubid = request.GET.get('id','')
     page = request.GET.get('page',1)
     
-    myclub=DClub.objects.get(id=myclubid)
-    myplayers=DPlayer.objects.filter(club=myclubid).order_by('last_name')
+    myclub=Club.objects.get(id=myclubid)
+    myplayers=Player.objects.filter(club=myclubid).order_by('last_name')
 
     mynbresults=len(myplayers)
 
@@ -315,7 +324,7 @@ def clubdatapools(request):
     myclubid = request.GET.get('id','')
     page = request.GET.get('page',1)
     
-    myclubpools=DClub.objects.filter(id=myclubid).values('dplayer__dpoolplayer__pool__name', 'dplayer__dpoolplayer__pool__phase_name','dplayer__dpoolplayer__pool__competition__name','dplayer__dpoolplayer__pool__id').annotate(dcount=Count('dplayer__dpoolplayer__pool__id')).order_by('dplayer__dpoolplayer__pool__competition__name','dplayer__dpoolplayer__pool__phase_name')
+    myclubpools=PoolTeam.objects.filter(club=myclubid).values('name', 'pool__phase__name','pool__phase__competition__name','pool__name','pool__id').annotate(dcount=Count('pool__id')).order_by('pool__phase__competition__name','pool__phase__name')
 
     mynbresults=len(myclubpools)
 
@@ -326,7 +335,7 @@ def clubdatapools(request):
     return render(request, 'hbsui/clubdatapools.html', {'clubpools':clubpools,'nbresults':mynbresults, 'page_range':page_range})
 
 def top(request):
-    mytopgoalscorers = DPlayer.objects.order_by('-goals')[:10]
+    mytopgoalscorers = Player.objects.order_by('-goals')[:10]
     return render(request, 'hbsui/top.html', {'topgoalscorers':mytopgoalscorers})
 
 def favorites(request):

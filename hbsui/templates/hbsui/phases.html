@@ -1,0 +1,15 @@
+<div class="field">
+    <div class="control">
+        <div class="select is-fullwidth is-size-7-mobile">
+            <select hx-get="/pools/"
+                name="phaseid"
+                hx-target="#pools"
+                _="on change show #pools">
+            <option selected value=''> -- Choisissez une phase-- </option>
+            {% for phase in phases %}
+                <option value={{ phase.id }}>{{ phase.name }}</option>
+            {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>

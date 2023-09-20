@@ -17,10 +17,10 @@
                 <td><a>{{ poolplayer.player.club.name }}</a></td>
                 <td><a>{{ poolplayer.player.last_name }} {{ poolplayer.player.first_name|lower|capfirst }}</a></td>
                 <td><a>{{ poolplayer.match_played }}</a></td>
-                <td><a>{{ poolplayer.goal }}</a></td>
+                <td><a>{{ poolplayer.goals }}</a></td>
                 <td><a>{{ poolplayer.saves }}</a></td>
-                <td><a>{{ poolplayer.avg }}</a></td>
-                <td><a>{{ poolplayer.avg_stop }}</a></td>
+                <td><a>{{ poolplayer.avg_goals }}</a></td>
+                <td><a>{{ poolplayer.avg_saves }}</a></td>
             </tr>
         </tbody>
         {% endfor %}

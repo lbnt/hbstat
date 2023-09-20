@@ -1,9 +1,9 @@
 <div class="content" _="on load show #results then hide #welcome">
-	<p class="title has-text-primary is-5">{{ pool.competition.championship.name }}</p>
+	<p class="title has-text-primary is-5">{{ pool.phase.competition.championship.name }}</p>
 	<p class="subtitle is-6">
-		{{ pool.competition.name }}
+		{{ pool.phase.competition.name }}
 		<br>
-		{{ pool.phase_name }}
+		{{ pool.phase.name }}
 		<br>
 		{{ pool.name }}
 		<a _="
@@ -22,9 +22,9 @@
 				
 				on click
 				js(me)
-					const mychampionshipname = encodeURI(`{{ pool.competition.championship.name }}`);
-					const mycompetitionname = encodeURI(`{{ pool.competition.name }}`);
-					const myphasename = encodeURI(`{{ pool.phase_name }}`);
+					const mychampionshipname = encodeURI(`{{ pool.phase.competition.championship.name }}`);
+					const mycompetitionname = encodeURI(`{{ pool.phase.competition.name }}`);
+					const myphasename = encodeURI(`{{ pool.phase.name }}`);
 					const mypoolname = encodeURI(`{{ pool.name }}`);
 					const mypool = {id:'{{ pool.id }}',championship_name:mychampionshipname,competition_name:mycompetitionname,phase_name:myphasename,name:mypoolname};
 					let favoritepools = JSON.parse(localStorage.getItem('favoritepools')) || [];
@@ -47,11 +47,11 @@
 	<nav class="tabs is-boxed is-centered is-size-7-mobile" hx-target="#tabcontents" _="on htmx:afterOnLoad take .is-active for event.target">
 		<div class="container">
 			<ul>
-				<li class="tab is-active" hx-get="/poolevents/" hx-vals='{"poolid": {{ pool.id }}}'><a >Evènements</a></li>
+				<li class="tab is-active" hx-get="/poolmatchs/" hx-vals='{"poolid": {{ pool.id }}}'><a >Evènements</a></li>
 				<li class="tab" hx-get="/poolteams/" hx-vals='{"poolid": {{ pool.id }}}'><a >Classement</a></li>
 				<li class="tab" hx-get="/poolplayers/" hx-vals='{"poolid": {{ pool.id }}}'><a >Joueurs</a></li>
 			</ul>
 		</div>
 	</nav>
-	<div id="tabcontents" hx-get="/poolevents/" hx-trigger="load" hx-vals='{"poolid": {{ pool.id }}}'></div>
+	<div id="tabcontents" hx-get="/poolmatchs/" hx-trigger="load" hx-vals='{"poolid": {{ pool.id }}}'></div>
 </div>

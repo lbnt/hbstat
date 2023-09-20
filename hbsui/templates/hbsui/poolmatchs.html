@@ -1,0 +1,31 @@
+{% if poolmatchs %}
+{% for poolmatch in poolmatchs %}
+<div class="columns">
+    <div class="column is-6 is-full-mobile is-size-7-mobile" style="border-bottom: 2px solid; border-bottom-color: lightgrey;">
+        <p style="float: left; font-weight: bold;">J{{ poolmatch.day.index }}</p>
+        <p style="float: right; font-style: italic;"><i>{{ poolmatch.date|date:'d-m-Y' }} {{ poolmatch.date|time:"H:i" }}</i></p>
+        <p style="text-align: center"><a href={{ poolmatch.fdm }}>{% if poolmatch.team_1_score != None %}FdM{% endif %}</a></p>
+        <div style="clear: both;"></div>
+        <p style="float: left;">{{ poolmatch.team_1.name }}</p>
+        <p style="float: right;">{% if poolmatch.team_1_score == None %}-{% else %}{{ poolmatch.team_1_score }}{% endif %}</p>
+        <div style="clear: both;"></div>
+        <p style="float: left;">{{ poolmatch.team_2.name }}</p>
+        <p style="float: right;">{% if poolmatch.team_2_score == None %}-{% else %}{{ poolmatch.team_2_score }}{% endif %}</p>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="column is-6 is-full-mobile" style="border-bottom: 2px solid; border-bottom-color: lightgrey; font-weight: lighter; font-size: 75%;">
+        <p style="float: left;"><br>{% if poolmatch.gym == None %}-{% else %}{{ poolmatch.gym.location }}{% endif %}<br></p>
+        <p style="float: right;"><br>ARBITRES<br>{% if poolmatch.officials.juge1.name == None %}-{% else %}{{ poolmatch.officials.juge1.name }}{% endif %}<br>{% if poolmatch.officials.juge2.name == None %}-{% else %}{{ poolmatch.officials.juge2.name }}{% endif %}</p>
+        <div style="clear: both;"></div>
+        
+    </div>
+</div>
+{% endfor %}
+<p style="text-align: center">
+    <a href="/poolmatchscsv/?poolid={{ pool.id }}">Télécharger ces données au format CSV</a>
+</p>
+<div style="clear: both;"></div>
+{% else %}
+<p>Pas de données d'évènements pour cette poule!</p>
+{% endif %}
+
