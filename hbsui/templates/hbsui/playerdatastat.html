@@ -6,21 +6,25 @@
         <tr>
             <th>Match N°</th>
             <th>But</th>
+            <th>Tir</th>
+            <th>7m</th>
             <th>Arrêt</th>
             <th>2 min</th>
             <th>Carton jaune</th>
             <th>Carton rouge</th>
         </tr>
     </thead>
-    {% for playerpoolstat in playerpoolstats %}
+    {% for playermatchstat in playermatchstats %}
     <tbody>
         <tr>
-            <td>{{ playerpoolstat.game|add:"1" }}</td>
-            <td>{{ playerpoolstat.goal }}</td>
-            <td>{{ playerpoolstat.saves }}</td>
-            <td>{{ playerpoolstat.mins }}</td>
-            <td>{{ playerpoolstat.warn }}</td>
-            <td>{{ playerpoolstat.dis }}</td>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ playermatchstat.goals }}</td>
+            <td>{{ playermatchstat.shots }}</td>
+            <td>{{ playermatchstat.penaltythrows }}</td>
+            <td>{{ playermatchstat.saves }}</td>
+            <td>{{ playermatchstat.mins }}</td>
+            <td>{{ playermatchstat.warn }}</td>
+            <td>{{ playermatchstat.dis }}</td>
         </tr>
     </tbody>
     {% endfor %}

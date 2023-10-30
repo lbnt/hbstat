@@ -7,7 +7,11 @@
                 _="on change show #competitions then hide #phases then hide #pools">
             <option selected value=''> -- Choisissez un championnat -- </option>
             {% for championship in championships %}
-            <option value={{ championship.id }}>{{ championship.departement }} - {{ championship.name }}</option>
+                {% if championship.category == 'DEP' %}
+                    <option value={{ championship.id }}>{{ championship.departement }} - {{ championship.name }}</option>
+                {% elif championship.category == 'REG' %}
+                    <option value={{ championship.id }}>{{ championship.region }} - {{ championship.name }}</option>
+                {% endif %}
             {% endfor %}
             </select>
         </div>

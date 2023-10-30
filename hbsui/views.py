@@ -21,6 +21,7 @@ from hbsui.models import PoolMatch
 from hbsui.models import PoolDay
 from hbsui.models import Player
 from hbsui.models import PlayerPoolStat
+from hbsui.models import PlayerMatchStat
 from hbsui.models import Player
 
 # Create your views here.
@@ -46,8 +47,11 @@ def categories(request):
 
 def championships(request):
     mycategory = request.GET.get('categoryid','')
-    if mycategory != '':
+    if mycategory == 'DEP':
         mychampionships = Championship.objects.filter(category=mycategory).order_by('departement')
+        return render(request, 'hbsui/championships.html', {'championships': mychampionships})
+    elif mycategory == 'REG':
+        mychampionships = Championship.objects.filter(category=mycategory).order_by('region')
         return render(request, 'hbsui/championships.html', {'championships': mychampionships})
     else:
         return HttpResponse('<div id="championships"></div>')
@@ -259,8 +263,8 @@ def playerdatastat(request):
     myplayerid = request.GET.get('playerid','')
     
     mypool = Pool.objects.get(id=mypoolid)
-    myplayerpoolstats=PlayerPoolStat.objects.filter(player=myplayerid,pool=mypoolid)  
-    return render(request, 'hbsui/playerdatastat.html', {'pool':mypool,'playerpoolstats':myplayerpoolstats})
+    myplayermatchstats=PlayerMatchStat.objects.filter(player=myplayerid,pool=mypoolid)  
+    return render(request, 'hbsui/playerdatastat.html', {'pool':mypool,'playermatchstats':myplayermatchstats})
 
 def emptymodal(request):
     return HttpResponse('<div class=\"modal\"></div>')
