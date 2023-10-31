@@ -22,7 +22,7 @@
 			on click
 			js(me)
 				const myclubname = encodeURI(`{{ club.name }}`);
-				const myclub = {id:'{{ club.id }}',name:myclubname};
+				const myclub = {season:'19',id:'{{ club.id }}',name:myclubname};
 				let favoriteclubs = JSON.parse(localStorage.getItem('favoriteclubs')) || [];
 				let index = favoriteclubs.findIndex(el => el.id === '{{ club.id }}');
 				// myclub is not favoriteclubs, add it

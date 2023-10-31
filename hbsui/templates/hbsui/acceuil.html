@@ -61,7 +61,41 @@
             <div class="columns">
                 <div class="column is-8 is-offset-2 is-full-mobile">
                     <div id="modal"></div>
-                    <div class="box" id="welcome" style="padding: 10px;" hx-get="/welcome/" hx-trigger="load"></div>
+                    <div class="box" id="welcome" style="padding: 10px;" hx-get="/welcome/" hx-trigger="load" _="on load
+                    js(me)
+                        //clean favorites pools
+                        let favoritepools = JSON.parse(localStorage.getItem('favoritepools')) || [];
+                        for(let index = 0; index < favoritepools.length; index++) {
+                            if (favoritepools[index].season != '19') {
+                                //invalid or previous season -> remove the favorite
+                                favoritepools.splice(index, 1);
+                            }
+                            // store array in local storage
+					        localStorage.setItem('favoritepools', JSON.stringify(favoritepools));
+                        }
+
+                        //clean favorite players
+                        let favoriteplayers = JSON.parse(localStorage.getItem('favoriteplayers')) || [];
+                        for(let index = 0; index < favoriteplayers.length; index++) {
+                            if (favoriteplayers[index].season != '19') {
+                                //invalid or previous season -> remove the favorite
+                                favoriteplayers.splice(index, 1);
+                            }
+                            // store array in local storage
+					        localStorage.setItem('favoriteplayers', JSON.stringify(favoriteplayers));
+                        }
+
+                        //clean favorite clubs
+                        let favoriteclubs = JSON.parse(localStorage.getItem('favoriteclubs')) || [];
+                        for(let index = 0; index < favoriteclubs.length; index++) {
+                            if (favoriteclubs[index].season != '19') {
+                                //invalid or previous season -> remove the favorite
+                                favoriteclubs.splice(index, 1);
+                            }
+                            // store array in local storage
+					        localStorage.setItem('favoriteclubs', JSON.stringify(favoriteclubs));
+                        }
+				    end"></div>
                     <div class="box" id="search" style="display: none; padding: 10px;"></div>
                     <div class="box" id="results" style="display: none; padding: 10px;">{% block results %}{% endblock %}</div>
                 </div>

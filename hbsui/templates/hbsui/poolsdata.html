@@ -26,7 +26,7 @@
 					const mycompetitionname = encodeURI(`{{ pool.phase.competition.name }}`);
 					const myphasename = encodeURI(`{{ pool.phase.name }}`);
 					const mypoolname = encodeURI(`{{ pool.name }}`);
-					const mypool = {id:'{{ pool.id }}',championship_name:mychampionshipname,competition_name:mycompetitionname,phase_name:myphasename,name:mypoolname};
+					const mypool = {season:'19',id:'{{ pool.id }}',championship_name:mychampionshipname,competition_name:mycompetitionname,phase_name:myphasename,name:mypoolname};
 					let favoritepools = JSON.parse(localStorage.getItem('favoritepools')) || [];
 					let index = favoritepools.findIndex(el => el.id === '{{ pool.id }}');
 					// mypool is not favoritepools, add it

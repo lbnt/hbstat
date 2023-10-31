@@ -24,7 +24,7 @@
 				const myplayerlastname = encodeURI(`{{ player.last_name }}`);
 				const myplayerfirstname = encodeURI(`{{ player.first_name|lower|capfirst }}`);
 				const myplayerclubname = encodeURI(`{{ player.club.name  }}`);
-				const myplayer = {id:'{{ player.id }}',last_name:myplayerlastname,first_name:myplayerfirstname,club:myplayerclubname};
+				const myplayer = {season:'19',id:'{{ player.id }}',last_name:myplayerlastname,first_name:myplayerfirstname,club:myplayerclubname};
 				let favoriteplayers = JSON.parse(localStorage.getItem('favoriteplayers')) || [];
 				let index = favoriteplayers.findIndex(el => el.id === '{{ player.id }}');
 				// myplayer is not favoriteplayers, add it
