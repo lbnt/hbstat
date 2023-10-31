@@ -31,6 +31,7 @@ urlpatterns = [
     path('poolsdata/', views.poolsdata),
     path('poolplayers/', views.poolplayers),
     path('poolmatchs/', views.poolmatchs),
+    path('poolmatchfdm/', views.poolmatchfdm),
     path('poolmatchscsv/', views.poolmatchscsv),
     path('poolteams/', views.poolteams),
     path('poolteamscsv/', views.poolteamscsv),

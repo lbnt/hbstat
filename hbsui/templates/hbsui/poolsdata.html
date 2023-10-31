@@ -1,11 +1,8 @@
 <div class="content" _="on load show #results then hide #welcome">
 	<p class="title has-text-primary is-5">{{ pool.phase.competition.championship.name }}</p>
-	<p class="subtitle is-6">
-		{{ pool.phase.competition.name }}
-		<br>
-		{{ pool.phase.name }}
-		<br>
-		{{ pool.name }}
+	<p class="subtitle has-text-link is-6">{{ pool.phase.competition.name }}</p>
+	<p class="subtitle has-text-info is-6">{{ pool.phase.name }}
+		<br>{{ pool.name }}
 		<a _="
 				on load
 				js(me)

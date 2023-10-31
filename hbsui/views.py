@@ -4,7 +4,7 @@ from unidecode import unidecode
 import csv
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.core.paginator import Paginator
 
@@ -103,6 +103,12 @@ def poolmatchs(request):
     mypool = Pool.objects.get(pk=mypoolid)
     poolmatchs = PoolMatch.objects.filter(pool=mypoolid)
     return render(request, 'hbsui/poolmatchs.html', {'pool':mypool, 'poolmatchs':poolmatchs,'pool_gender':mypool.phase.competition.get_gender_display(),'pool_age':mypool.phase.competition.get_age_display()})
+
+def poolmatchfdm(request):
+    myfdmcode = request.GET.get('fdm','')
+    fdmurl = "https://media-ffhb-fdm.ffhandball.fr/fdm/"+ myfdmcode[0] + "/" + myfdmcode[1] + "/" + myfdmcode[2] + "/" + myfdmcode[3] + "/" + myfdmcode + ".pdf"
+    response = redirect(fdmurl)
+    return response
 
 def poolmatchscsv(request):
     

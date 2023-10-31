@@ -4,7 +4,7 @@
     <div class="column is-6 is-full-mobile is-size-7-mobile" style="border-bottom: 2px solid; border-bottom-color: lightgrey;">
         <p style="float: left; font-weight: bold;">J{{ poolmatch.day.index }}</p>
         <p style="float: right; font-style: italic;"><i>{{ poolmatch.date|date:'d-m-Y' }} {{ poolmatch.date|time:"H:i" }}</i></p>
-        <p style="text-align: center"><a href={{ poolmatch.fdm }}>{% if poolmatch.team_1_score != None %}FdM{% endif %}</a></p>
+        <p style="text-align: center"><a href="/poolmatchfdm/?fdm={{ poolmatch.fdm }}">{% if poolmatch.team_1_score != None %}FdM{% endif %}</a></p>
         <div style="clear: both;"></div>
         <p style="float: left;">{{ poolmatch.team_1.name }}</p>
         <p style="float: right;">{% if poolmatch.team_1_score == None %}-{% else %}{{ poolmatch.team_1_score }}{% endif %}</p>
