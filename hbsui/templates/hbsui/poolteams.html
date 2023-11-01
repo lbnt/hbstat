@@ -4,14 +4,14 @@
         <tr>
             <th></th>
             <th>Equipe</th>
+            <th>Pts</th>
             <th>J</th>
-            <th>P</th>
             <th>G</th>
             <th>N</th>
             <th>P</th>
             <th>+</th>
             <th>-</th>
-            <th>D</th>
+            <th>∆</th>
         </tr>
     </thead>
     {% for poolteam in poolteams %}
@@ -19,8 +19,8 @@
         <tr>
             <td>{{ poolteam.ranking }}</td>
             <td>{{ poolteam.name }}</td>
-            <td>{{ poolteam.games }}</td>
             <td>{{ poolteam.points }}</td>
+            <td>{{ poolteam.games }}</td>
             <td>{{ poolteam.wins }}</td>
             <td>{{ poolteam.draws }}</td>
             <td>{{ poolteam.defeats }}</td>
