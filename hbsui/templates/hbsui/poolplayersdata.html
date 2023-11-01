@@ -19,8 +19,8 @@
                 <td><a>{{ poolplayer.match_played }}</a></td>
                 <td><a>{{ poolplayer.goals }}</a></td>
                 <td><a>{{ poolplayer.saves }}</a></td>
-                <td><a>{{ poolplayer.avg_goals }}</a></td>
-                <td><a>{{ poolplayer.avg_saves }}</a></td>
+                <td><a>{{ poolplayer.avg_goals|floatformat:-2 }}</a></td>
+                <td><a>{{ poolplayer.avg_saves|floatformat:-2 }}</a></td>
             </tr>
         </tbody>
         {% endfor %}

@@ -95,8 +95,8 @@
 				<td><a href="#playerdatastat">{{ playerpool.match_played }}</a></td>
 				<td><a href="#playerdatastat">{{ playerpool.goals }}</a></td>
 				<td><a href="#playerdatastat">{{ playerpool.saves }}</a></td>
-				<td><a href="#playerdatastat">{{ playerpool.avg_goals }}</a></td>
-				<td><a href="#playerdatastat">{{ playerpool.avg_saves }}</a></td>
+				<td><a href="#playerdatastat">{{ playerpool.avg_goals|floatformat:-2 }}</a></td>
+				<td><a href="#playerdatastat">{{ playerpool.avg_saves|floatformat:-2 }}</a></td>
 			</tr>
 		</tbody>
 		{% endfor %}
