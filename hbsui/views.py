@@ -2,6 +2,7 @@ from math import ceil
 import datetime
 from unidecode import unidecode
 import csv
+import pygal
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -23,6 +24,8 @@ from hbsui.models import Player
 from hbsui.models import PlayerPoolStat
 from hbsui.models import PlayerMatchStat
 from hbsui.models import Player
+from hbsui.models import DEPARTEMENT_CHOICES
+from hbsui.models import REGION_CHOICES_TO_INSEE
 
 # Create your views here.
 def welcome(request):
@@ -226,11 +229,11 @@ def searchplayers(request):
     filterdict = {}
 
     if len(myfirst_name) > 0:
-        filterdict['first_name__icontains'] = unidecode(myfirst_name)
+        filterdict['first_name__icontains'] = unidecode(myfirst_name.strip())
     if len(mylast_name) > 0:
-        filterdict['last_name__icontains'] = unidecode(mylast_name)
+        filterdict['last_name__icontains'] = unidecode(mylast_name.strip())
     if len(myname) > 0:
-        filterdict['club__name__icontains'] = unidecode(myname)
+        filterdict['club__name__icontains'] = unidecode(myname.strip())
     if mygender == 'M' or mygender == 'F' :
         filterdict['gender'] = mygender
     
@@ -350,3 +353,64 @@ def top(request):
 
 def favorites(request):
     return render(request, 'hbsui/favorites.html')
+
+def maps(request):
+    return render(request, 'hbsui/maps.html')
+
+
+def generatemaps(request):
+
+    mytype = request.GET.get('type','T')
+    mylevel = request.GET.get('level','D')
+
+    myplayerdata = {}
+    myclubdata = {}
+    filterdict = {}
+
+    if mytype == 'M' or mytype == 'F' or mytype == 'T':
+        if mytype == 'M':
+            filterdict['gender__exact'] = 'M'
+            data_title = 'Nombre de joueurs (M)'
+        elif mytype == 'F':
+            filterdict['gender__exact'] = 'F'
+            data_title = 'Nombre de joueuses (F)'
+        elif mytype == 'T':
+            data_title = 'Nombre de joueurs (M+F)'
+
+        if mylevel == 'D':
+            for dep_code, dep_name in DEPARTEMENT_CHOICES:
+                filterdict['club__departement__exact'] = dep_code
+                myplayerdata[dep_code] = Player.objects.filter(**filterdict).count()
+            
+            fr_chart = pygal.maps.fr.Departments(show_legend=False, human_readable=True, fill=True)
+            fr_chart.add(data_title, myplayerdata)
+            
+        elif mylevel == 'R':
+            for reg_code, reg_insee in REGION_CHOICES_TO_INSEE:
+                filterdict['club__region__exact'] = reg_code
+                myplayerdata[reg_insee] = Player.objects.filter(**filterdict).count()
+            
+            fr_chart = pygal.maps.fr.Regions(show_legend=False, human_readable=True, fill=True)
+            fr_chart.add(data_title, myplayerdata)
+
+
+    elif mytype == 'C':
+        data_title = 'Nombre de clubs'
+        
+        if mylevel == 'D':
+            for dep_code, dep_name in DEPARTEMENT_CHOICES:
+                filterdict['departement'] = dep_code
+                myclubdata[dep_code] = Club.objects.filter(**filterdict).count()
+            
+            fr_chart = pygal.maps.fr.Departments(show_legend=False, human_readable=True, fill=True)
+            fr_chart.add(data_title, myclubdata)
+            
+        elif mylevel == 'R':
+            for reg_code, reg_insee in REGION_CHOICES_TO_INSEE:
+                filterdict['region'] = reg_code
+                myclubdata[reg_insee] = Club.objects.filter(**filterdict).count()
+            
+            fr_chart = pygal.maps.fr.Regions(show_legend=False, human_readable=True, fill=True)
+            fr_chart.add(data_title, myclubdata)    
+
+    return render(request, 'hbsui/mapdata.html', {'chart' : fr_chart.render_data_uri(), 'title' : data_title})

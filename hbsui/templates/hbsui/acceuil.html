@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://unpkg.com/htmx.org@1.8.6" integrity="sha384-Bj8qm/6B+71E6FQSySofJOUjA/gq330vEqjFx9LakWybUySyI1IQHwPtbTU7bNwx" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/hyperscript.org@0.9.8"></script>
+        <script src="https://kozea.github.io/pygal.js/latest/pygal-tooltips.min.js"></script>
         <style type="text/css">
             body {
                 scroll-behavior: smooth;
@@ -47,6 +48,9 @@
                         </a>
                         <a class="navbar-item" hx-get="/players/" hx-target="#modal" _="on click toggle .is-active on #navbar-burger then toggle .is-active on #navbar">
                             Les joueurs
+                        </a>
+                        <a class="navbar-item" hx-get="/maps/" hx-target="#modal" _="on click toggle .is-active on #navbar-burger then toggle .is-active on #navbar then show #results then hide #welcome">
+                            Les cartes
                         </a>
                         <a class="navbar-item" hx-get="/favorites/" hx-target="#modal" _="on click toggle .is-active on #navbar-burger then toggle .is-active on #navbar">
                             Mes favoris

@@ -1,0 +1,60 @@
+<div id="modalmaps" class="modal is-active">
+	<div class="modal-background" _="on click toggle .is-active on #modalmaps"></div>
+    <div class="modal-content">
+        <div class="box">
+            <p class="title is-5">Cartes</p>
+            <form>
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label class="label is-size-7-mobile">Type de cartes</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <div class="select is-size-7-mobile">
+                                <select name="type">
+                                    <option value='T'>Nombre de joueurs (M+F)</option>
+                                    <option value='M'>Nombre de joueurs (M)</option>
+                                    <option value='F'>Nombre de joueuses (F)</option>
+                                    <option value='C'>Nombre de clubs</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label class="label is-size-7-mobile">Découpage géographique</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <div class="select is-size-7-mobile">
+                                <select name="level">
+                                    <option value='D'>Départements</option>
+                                    <option value='R'>Régions</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button
+                            class="button is-primary is-size-7-mobile"
+                            hx-trigger="click"
+                            hx-get="/generatemaps/" 
+                            hx-target="#results"
+                            hx-include="[name='type'],[name='level']"
+                            _="on click toggle .is-active on #modalmaps then hide #search then show #results then hide #welcome">
+                            Rechercher
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <button class="modal-close" aria-label="close" _="on click toggle .is-active on #modalmaps"></button>
+        </div>
+    </div>
+</div>
