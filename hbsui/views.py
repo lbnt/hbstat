@@ -24,7 +24,7 @@ from hbsui.models import Player
 from hbsui.models import PlayerPoolStat
 from hbsui.models import PlayerMatchStat
 from hbsui.models import Player
-from hbsui.models import DEPARTEMENT_CHOICES
+from hbsui.models import DEPARTEMENT_CHOICES_TO_INSEE
 from hbsui.models import REGION_CHOICES_TO_INSEE
 
 # Create your views here.
@@ -378,9 +378,18 @@ def generatemaps(request):
             data_title = 'Nombre de joueurs (M+F)'
 
         if mylevel == 'D':
-            for dep_code, dep_name in DEPARTEMENT_CHOICES:
+            for dep_code, dep_insee in DEPARTEMENT_CHOICES_TO_INSEE:
                 filterdict['club__departement__exact'] = dep_code
-                myplayerdata[dep_code] = Player.objects.filter(**filterdict).count()
+                ## les dom tom ont 01 pour departement
+                filterdict['club__region__in'] = ['51','52','53','54','55','56','57','58','59','60','61','62','63']
+                myplayerdata[dep_insee] = Player.objects.filter(**filterdict).count()
+            
+            ## region = departement
+            myplayerdata['971'] = Player.objects.filter(club__region='64').count() ## Guadeloupe
+            myplayerdata['972'] = Player.objects.filter(club__region='66').count() ## Martinique
+            myplayerdata['973'] = Player.objects.filter(club__region='65').count() ## Guyane
+            myplayerdata['974'] = Player.objects.filter(club__region='69').count() ## Réunion
+            myplayerdata['976'] = Player.objects.filter(club__region='70').count() ## Mayotte
             
             fr_chart = pygal.maps.fr.Departments(show_legend=False, human_readable=True, fill=True)
             fr_chart.add(data_title, myplayerdata)
@@ -398,9 +407,18 @@ def generatemaps(request):
         data_title = 'Nombre de clubs'
         
         if mylevel == 'D':
-            for dep_code, dep_name in DEPARTEMENT_CHOICES:
+            for dep_code, dep_insee in DEPARTEMENT_CHOICES_TO_INSEE:
                 filterdict['departement'] = dep_code
-                myclubdata[dep_code] = Club.objects.filter(**filterdict).count()
+                ## les dom tom ont 01 pour departement
+                filterdict['region__in'] = ['51','52','53','54','55','56','57','58','59','60','61','62','63']
+                myclubdata[dep_insee] = Club.objects.filter(**filterdict).count()
+            
+            ## region = departement
+            myclubdata['971'] = Club.objects.filter(region='64').count() ## Guadeloupe
+            myclubdata['972'] = Club.objects.filter(region='66').count() ## Martinique
+            myclubdata['973'] = Club.objects.filter(region='65').count() ## Guyane
+            myclubdata['974'] = Club.objects.filter(region='69').count() ## Réunion
+            myclubdata['976'] = Club.objects.filter(region='70').count() ## Mayotte
             
             fr_chart = pygal.maps.fr.Departments(show_legend=False, human_readable=True, fill=True)
             fr_chart.add(data_title, myclubdata)
