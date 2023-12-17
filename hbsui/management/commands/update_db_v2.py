@@ -968,23 +968,42 @@ def scrap( season, category):
 
                                                     match_played = not (match['equipe1Score'] == None or match['equipe2Score'] == None or match['equipe1Score'] == 'FO' or match['equipe2Score'] == 'FO' )
 
-                                                    poolmatch_obj, created = PoolMatch.objects.update_or_create(
-                                                        id = match['id'],
-                                                        defaults = {
-                                                            'pool' : pool_obj,
-                                                            'day' : poolday_obj,
-                                                            'date' : date_match,
-                                                            'played' : match_played,
-                                                            'team_1' : team1_obj,
-                                                            'team_1_score' : match['equipe1Score'],
-                                                            'team_1_score_ht' : match['equipe1ScoreMT'],
-                                                            'team_2' : team2_obj,
-                                                            'team_2_score' : match['equipe2Score'],
-                                                            'team_2_score_ht' : match['equipe2ScoreMT'],
-                                                            'fdm' : match['fdmCode'],
-                                                            'gym' : gym_obj
-                                                        }
-                                                    )
+                                                    try:
+                                                        poolmatch_obj = PoolMatch.objects.get(id = match['id'])
+                                                    except PoolMatch.DoesNotExist:
+                                                        poolmatch_obj = PoolMatch.objects.create(
+                                                            id = match['id'],
+                                                            pool = pool_obj,
+                                                            day = poolday_obj,
+                                                            date = date_match,
+                                                            played = match_played,
+                                                            team_1 = team1_obj,
+                                                            team_1_score = match['equipe1Score'],
+                                                            team_1_score_ht = match['equipe1ScoreMT'],
+                                                            team_2 = team2_obj,
+                                                            team_2_score = match['equipe2Score'],
+                                                            team_2_score_ht = match['equipe2ScoreMT'],
+                                                            fdm = match['fdmCode'],
+                                                            gym = gym_obj
+                                                        )
+                                                    else:
+                                                        #get previous match state to update only if necessary
+                                                        match_already_played = poolmatch_obj.played
+                                                        
+                                                        poolmatch_obj.pool = pool_obj
+                                                        poolmatch_obj.day = poolday_obj
+                                                        poolmatch_obj.date = date_match
+                                                        poolmatch_obj.played = match_played
+                                                        poolmatch_obj.team_1 = team1_obj
+                                                        poolmatch_obj.team_1_score = match['equipe1Score']
+                                                        poolmatch_obj.team_1_score_ht = match['equipe1ScoreMT']
+                                                        poolmatch_obj.team_2 = team2_obj
+                                                        poolmatch_obj.team_2_score = match['equipe2Score']
+                                                        poolmatch_obj.team_2_score_ht = match['equipe2ScoreMT']
+                                                        poolmatch_obj.fdm = match['fdmCode']
+                                                        poolmatch_obj.gym = gym_obj
+                                                        
+                                                        poolmatch_obj.save()
 
                                                     #updating clubs logo
                                                     team1_obj.club.logo = match['structure1Logo']
@@ -992,8 +1011,8 @@ def scrap( season, category):
                                                     team2_obj.club.logo = match['structure2Logo']
                                                     team2_obj.club.save()
 
-                                                    #parse match sheet
-                                                    if poolmatch_obj.played :
+                                                    #parse match sheet only if necessary
+                                                    if match_played and (not match_already_played):
                                                         get_and_parse_match_sheet(poolmatch_obj)
                                     
                                     #get pool ranking
