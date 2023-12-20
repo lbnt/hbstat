@@ -14,7 +14,7 @@ from hbsui.models import Player
 from hbsui.models import Gym
 
 from collections import Counter
-from difflib import SequenceMatcher
+import re
 
 
 def update_club_name():
@@ -26,35 +26,18 @@ def update_club_name():
 
         team_names = []
         for mypoolteam in mypoolteams:
-            team_names.append(mypoolteam.name)
+            #remove team number
+            clean_pool_teamname = re.sub('( .| \d)$', '', mypoolteam.name)
+            team_names.append(clean_pool_teamname)
 
         names_occurence = Counter(team_names)
 
+        #get most common team name as club name
         names = names_occurence.most_common(2)
 
-        if len(names) == 1:
-            myclub.name = names[0][0]
-            myclub.save()
-        elif len(names) == 2:
-            # initialize SequenceMatcher object with input string
-            seqMatch = SequenceMatcher(None,names[0][0],names[1][0])
-            print(names[0][0])
-            print(names[1][0])
-        
-            # find match of longest sub-string
-            match = seqMatch.find_longest_match(0, len(names[0][0]), 0, len(names[1][0]))
-
-            #TODO a ameliorer avec l'information de ration ?
-            if match.size > 3 :
-                myclub.name = names[0][0][match.a: match.a + match.size].strip()
-                print(myclub.name)
-                print('----------------')
-                myclub.save()
-            else:
-                #bad news
-                myclub.name = names[0][0]
-                print('pas de correspondance')
-                myclub.save()
+ 
+        myclub.name = names[0][0]
+        myclub.save()
 
         
     
