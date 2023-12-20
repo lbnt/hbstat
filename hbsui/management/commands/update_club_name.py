@@ -35,9 +35,10 @@ def update_club_name():
         #get most common team name as club name
         names = names_occurence.most_common(2)
 
- 
-        myclub.name = names[0][0]
-        myclub.save()
+        #some club don't have a team!
+        if len(names) >= 1:
+            myclub.name = names[0][0]
+            myclub.save()
 
         
     
