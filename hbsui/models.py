@@ -372,6 +372,8 @@ class Player(models.Model):
 class Gym(models.Model):
     id = models.CharField(primary_key=True, max_length=31)
     location = models.CharField(blank=True, null=True, max_length=511)
+    departement = models.CharField(max_length=2, choices=DEPARTEMENT_CHOICES, blank=True, null=True)
+    region = models.CharField(max_length=2, choices=REGION_CHOICES, blank=True, null=True)
     
     class Meta:
         managed = True
