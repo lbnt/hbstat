@@ -126,6 +126,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'local-memory-cache',
+    }
+}
+
 with open( BASE_DIR / 'settings.json',"r") as f:
     
     settings = json.load(f)
