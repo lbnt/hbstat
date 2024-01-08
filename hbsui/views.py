@@ -13,6 +13,8 @@ from django.db.models import Sum
 from django.db.models import Count
 from django.db.models import Avg
 
+from django.views.decorators.cache import cache_page
+
 from hbsui.models import Championship, Club
 from hbsui.models import Competition
 from hbsui.models import Phase
@@ -28,6 +30,7 @@ from hbsui.models import DEPARTEMENT_CHOICES_TO_INSEE
 from hbsui.models import REGION_CHOICES_TO_INSEE
 
 # Create your views here.
+@cache_page(60 * 60 * 24) #data are updated only once a day
 def welcome(request):
     mynbplayers=Player.objects.count()
     mynbpoolteams=PoolTeam.objects.count()
@@ -357,7 +360,7 @@ def favorites(request):
 def maps(request):
     return render(request, 'hbsui/maps.html')
 
-
+@cache_page(60 * 60 * 24)  #data are updated only once a day
 def generatemaps(request):
 
     mytype = request.GET.get('type','T')

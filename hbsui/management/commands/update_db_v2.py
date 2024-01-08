@@ -18,6 +18,8 @@ from django.db.models import Sum
 from django.db.models import Count
 from django.db.models import Avg
 
+from django.core.cache import cache
+
 import requests
 import json
 import hashlib
@@ -1056,5 +1058,7 @@ class Command(BaseCommand):
         scrap( '19', 'regional')
         #national
         #TODO
+        # clear cache to force cache refresh
+        cache.clear()
         
     
