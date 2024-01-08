@@ -35,9 +35,6 @@ from difflib import SequenceMatcher
 from django.utils.timezone import get_current_timezone
 
 
-#TODO maj periodique des noms de club
-#TODO calcul des stats joueurs totales et par poule
-
 
 base_url = "https://www.ffhandball.fr/wp-json/competitions/v1/computeBlockAttributes/"
 
@@ -231,8 +228,8 @@ def parse_score_sheet_headers (poolmatch_obj, doc):
     rec_date = (60, 142, 207, 158)
     rec_journee = (250, 142, 354, 158)
     
-    rec_speaker_nom = (60, 159, 249, 170)
-    rec_speaker_licence = (250, 159, 297, 170)
+    rec_speaker_nom = (60, 158, 249, 170)
+    rec_speaker_licence = (250, 158, 297, 170)
     rec_respsalle_nom = (60, 171, 249, 183)
     rec_respsalle_licence = (250, 171, 297, 183)
     rec_chrono_nom = (60, 184, 249, 213)
@@ -243,8 +240,8 @@ def parse_score_sheet_headers (poolmatch_obj, doc):
     rec_tuteurtable_licence = (250, 225, 297, 236)
     rec_delegue_nom = (60, 237, 249, 247)
     rec_delegue_licence = (250, 237, 297, 247)
-    rec_juge1_nom = (355, 159, 544, 170)
-    rec_juge1_licence = (545, 159, 593, 170)
+    rec_juge1_nom = (355, 158, 544, 170)
+    rec_juge1_licence = (545, 158, 593, 170)
     rec_juge2_nom = (355, 171, 544, 183)
     rec_juge2_licence = (545, 171, 593, 183)
     rec_jugeaccecole_nom = (355, 184, 544, 213)
