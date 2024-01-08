@@ -7,9 +7,9 @@
         <title>HBSTAT</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://unpkg.com/htmx.org@1.8.6" integrity="sha384-Bj8qm/6B+71E6FQSySofJOUjA/gq330vEqjFx9LakWybUySyI1IQHwPtbTU7bNwx" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/hyperscript.org@0.9.8"></script>
-        <script src="https://kozea.github.io/pygal.js/latest/pygal-tooltips.min.js"></script>
+        <script src="{% static 'hbsui/htmx.1.9.10.min.js' %}"></script>
+        <script src="{% static 'hbsui/hyperscript.0.9.12.min.js' %}"></script>
+        <script src="{% static 'hbsui/pygal-tooltips.min.js' %}"></script>
         <style type="text/css">
             body {
                 scroll-behavior: smooth;
@@ -18,7 +18,7 @@
                 cursor: pointer;
             }
         </style>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <link rel="stylesheet" href="{% static 'hbsui/bulma.0.9.4.min.css' %}">
         <link rel="shortcut icon" type="image/png" href="{% static 'hbsui/favicon.ico' %}"/>
         
     </head>
